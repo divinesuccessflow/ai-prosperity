@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Prosperity Project - Become an AI CEO in 90 Days</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #1a1a2e;
+            background: #ffffff;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 60px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-content {
+            text-align: center;
+            color: white;
+        }
+        
+        .badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+        
+        .hero h1 span {
+            background: linear-gradient(90deg, #ffd700, #ffed4a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.25rem;
+            margin-bottom: 30px;
+            opacity: 0.95;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(90deg, #ffd700, #ffb700);
+            color: #1a1a2e;
+            padding: 18px 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.5);
+        }
+        
+        .price-badge {
+            margin-top: 20px;
+            font-size: 1rem;
+        }
+        
+        .price-badge .original {
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+        
+        .price-badge .current {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #ffd700;
+        }
+        
+        /* Problem Section */
+        .problem-section {
+            padding: 100px 20px;
+            background: #f8f9ff;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 50px;
+        }
+        
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .problem-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        }
+        
+        .problem-card .icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        .problem-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #e74c3c;
+        }
+        
+        .problem-card p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        /* Solution Section */
+        .solution-section {
+            padding: 100px 20px;
+            background: white;
+        }
+        
+        .solution-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .solution-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .solution-section h2 span {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .solution-list {
+            text-align: left;
+            margin: 40px 0;
+        }
+        
+        .solution-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #f8f9ff;
+            border-radius: 15px;
+        }
+        
+        .solution-item .check {
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .solution-item h4 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+        
+        .solution-item p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* What You'll Learn */
+        .curriculum-section {
+            padding: 100px 20px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+        }
+        
+        .curriculum-section .section-title {
+            color: white;
+        }
+        
+        .week-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        
+        .week-card {
+            background: rgba(255,255,255,0.1);
+            padding: 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .week-card .week-num {
+            font-size: 0.8rem;
+            color: #ffd700;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .week-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+        
+        .week-card p {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+        
+        /* Testimonials */
+        .testimonials-section {
+            padding: 100px 20px;
+            background: #f8f9ff;
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .testimonial-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        }
+        
+        .testimonial-card .stars {
+            color: #ffd700;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+        
+        .testimonial-card p {
+            font-style: italic;
+            color: #444;
+            margin-bottom: 20px;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+        }
+        
+        .author-info h4 {
+            font-size: 1rem;
+            margin-bottom: 2px;
+        }
+        
+        .author-info span {
+            font-size: 0.85rem;
+            color: #888;
+        }
+        
+        /* Pricing Section */
+        .pricing-section {
+            padding: 100px 20px;
+            background: white;
+        }
+        
+        .pricing-card {
+            max-width: 500px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 30px;
+            padding: 50px;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .pricing-card::before {
+            content: 'EARLY BIRD';
+            position: absolute;
+            top: 20px;
+            right: -35px;
+            background: #ffd700;
+            color: #1a1a2e;
+            padding: 8px 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            transform: rotate(45deg);
+        }
+        
+        .pricing-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .pricing-card .price {
+            font-size: 4rem;
+            font-weight: 900;
+            margin: 20px 0;
+        }
+        
+        .pricing-card .price sup {
+            font-size: 1.5rem;
+            vertical-align: super;
+        }
+        
+        .pricing-card .original-price {
+            text-decoration: line-through;
+            opacity: 0.7;
+            font-size: 1.2rem;
+        }
+        
+        .pricing-card .savings {
+            background: rgba(255,215,0,0.3);
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+        }
+        
+        .pricing-features {
+            text-align: left;
+            margin: 30px 0;
+        }
+        
+        .pricing-features li {
+            list-style: none;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+        
+        .pricing-card .cta-button {
+            width: 100%;
+            display: block;
+            margin-top: 20px;
+        }
+        
+        .guarantee {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        /* FAQ Section */
+        .faq-section {
+            padding: 100px 20px;
+            background: #f8f9ff;
+        }
+        
+        .faq-grid {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            background: white;
+            margin-bottom: 15px;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            padding: 20px 25px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .faq-answer {
+            padding: 0 25px 20px;
+            color: #666;
+        }
+        
+        /* Final CTA */
+        .final-cta {
+            padding: 100px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            text-align: center;
+            color: white;
+        }
+        
+        .final-cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .final-cta p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .countdown-item {
+            background: rgba(255,255,255,0.2);
+            padding: 15px 25px;
+            border-radius: 10px;
+        }
+        
+        .countdown-item .number {
+            font-size: 2rem;
+            font-weight: 800;
+        }
+        
+        .countdown-item .label {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+        
+        /* Footer */
+        footer {
+            background: #1a1a2e;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
+        footer p {
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero-stats {
+                gap: 20px;
+            }
+            
+            .stat-number {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .pricing-card {
+                padding: 30px;
+            }
+            
+            .pricing-card .price {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="badge">🚀 Season 2 Now Open</div>
+                <h1>Become an <span>AI CEO</span><br>in Just 90 Days</h1>
+                <p class="hero-subtitle">Learn to build AI-powered businesses with zero employees, minimal investment, and generate $10,000+ using cutting-edge AI tools</p>
+                
+                <div class="hero-stats">
+                    <div class="stat">
+                        <div class="stat-number">90</div>
+                        <div class="stat-label">Days Program</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">$10K+</div>
+                        <div class="stat-label">Target Income</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">12</div>
+                        <div class="stat-label">Weekly Sessions</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Alumni</div>
+                    </div>
+                </div>
+                
+                <a href="#pricing" class="cta-button">Join Now - Limited Spots</a>
+                
+                <div class="price-badge">
+                    <span class="original">$350</span> → 
+                    <span class="current">$199 Early Bird</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Problem Section -->
+    <section class="problem-section">
+        <div class="container">
+            <h2 class="section-title">😫 Sound Familiar?</h2>
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <div class="icon">🤯</div>
+                    <h3>Overwhelmed by AI</h3>
+                    <p>New tools launching daily. ChatGPT, Claude, Midjourney... You don't know where to start or how to actually make money with them.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="icon">💸</div>
+                    <h3>Trading Time for Money</h3>
+                    <p>You're working 10-12 hours but income is capped. You know there's a better way but can't figure out how to scale.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="icon">😰</div>
+                    <h3>Fear of Being Left Behind</h3>
+                    <p>AI is replacing jobs. Companies want AI skills. You're worried about becoming irrelevant in the next 1-2 years.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="icon">🎯</div>
+                    <h3>No Clear Path</h3>
+                    <p>YouTube tutorials are scattered. Courses are outdated within months. You need a structured, proven path to AI income.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Solution Section -->
+    <section class="solution-section">
+        <div class="container">
+            <div class="solution-content">
+                <h2>Introducing <span>AI Prosperity Project</span></h2>
+                <p>A 90-day implementation program that transforms you from AI curious to AI profitable</p>
+                
+                <div class="solution-list">
+                    <div class="solution-item">
+                        <div class="check">✓</div>
+                        <div>
+                            <h4>Become an AI CEO with Zero Employees</h4>
+                            <p>Build automated systems that work 24/7 while you sleep. AI does the heavy lifting.</p>
+                        </div>
+                    </div>
+                    <div class="solution-item">
+                        <div class="check">✓</div>
+                        <div>
+                            <h4>$100/Day Income Framework</h4>
+                            <p>Clear math: 10 clients × $1,000 = $10K. We show you exactly how to get there in 90 days.</p>
+                        </div>
+                    </div>
+                    <div class="solution-item">
+                        <div class="check">✓</div>
+                        <div>
+                            <h4>Serve High-Net-Worth Clients</h4>
+                            <p>Target coaches, consultants, CEOs, and SMBs who pay premium for AI solutions.</p>
+                        </div>
+                    </div>
+                    <div class="solution-item">
+                        <div class="check">✓</div>
+                        <div>
+                            <h4>Group Accountability & Support</h4>
+                            <p>Join a pod of 7 members with weekly check-ins, buddy system, and mentor access.</p>
+                        </div>
+                    </div>
+                    <div class="solution-item">
+                        <div class="check">✓</div>
+                        <div>
+                            <h4>Done-For-You Templates & Prompts</h4>
+                            <p>Copy-paste templates for offers, outreach, automation workflows, and client delivery.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Curriculum Section -->
+    <section class="curriculum-section">
+        <div class="container">
+            <h2 class="section-title">📚 12-Week Curriculum</h2>
+            <div class="week-grid">
+                <div class="week-card">
+                    <div class="week-num">WEEK 1-2</div>
+                    <h3>🎯 Foundation & Positioning</h3>
+                    <p>Train AI on your strengths, identify your audience, craft your $1K+ offer</p>
+                </div>
+                <div class="week-card">
+                    <div class="week-num">WEEK 3-4</div>
+                    <h3>🔥 Lead Generation Mastery</h3>
+                    <p>10 ways to generate leads using AI. LinkedIn automation, content systems</p>
+                </div>
+                <div class="week-card">
+                    <div class="week-num">WEEK 5-6</div>
+                    <h3>🤖 AI Automation Systems</h3>
+                    <p>Build workflows with Zapier, Make, n8n. Automate client acquisition</p>
+                </div>
+                <div class="week-card">
+                    <div class="week-num">WEEK 7-8</div>
+                    <h3>📱 Content & Authority</h3>
+                    <p>AI avatar creation, video content, write a book in 1 hour, thought leadership</p>
+                </div>
+                <div class="week-card">
+                    <div class="week-num">WEEK 9-10</div>
+                    <h3>💰 Sales & Conversion</h3>
+                    <p>AI sales scripts, objection handling, proposal automation, closing techniques</p>
+                </div>
+                <div class="week-card">
+                    <div class="week-num">WEEK 11-12</div>
+                    <h3>📈 Scale & Systemize</h3>
+                    <p>Build SaaS products, create recurring revenue, scale to $10K+ monthly</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Testimonials -->
+    <section class="testimonials-section">
+        <div class="container">
+            <h2 class="section-title">💬 What Alumni Say</h2>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p>"I went from knowing nothing about AI to signing my first $2,000 client in week 6. The group accountability made all the difference."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">AK</div>
+                        <div class="author-info">
+                            <h4>Andrea K.</h4>
+                            <span>Marketing Consultant, USA</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p>"The LinkedIn automation alone paid for the course 10x over. Now I have 200+ coaches in my network reaching out to ME for help."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">RV</div>
+                        <div class="author-info">
+                            <h4>Rahul V.</h4>
+                            <span>Business Coach, India</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p>"I was skeptical about the $10K target. Hit $8K in month 2 and now consistently doing $15K/month with AI services."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">MP</div>
+                        <div class="author-info">
+                            <h4>Michael P.</h4>
+                            <span>Tech Consultant, UK</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Pricing Section -->
+    <section class="pricing-section" id="pricing">
+        <div class="container">
+            <h2 class="section-title">💎 Your Investment</h2>
+            <div class="pricing-card">
+                <h3>AI Prosperity Project</h3>
+                <p>Complete 90-Day Implementation Program</p>
+                
+                <div class="original-price">Regular: $350</div>
+                <div class="price"><sup>$</sup>199</div>
+                <div class="savings">🎉 You Save $151 (43% OFF)</div>
+                
+                <ul class="pricing-features">
+                    <li>✅ 12 Weekly Live Training Sessions</li>
+                    <li>✅ Private Community Access</li>
+                    <li>✅ Group Accountability Pod (7 members)</li>
+                    <li>✅ Done-For-You Templates & Prompts</li>
+                    <li>✅ 1-on-1 Mentor Support</li>
+                    <li>✅ Lifetime Access to Recordings</li>
+                    <li>✅ Resource Library & Tools</li>
+                    <li>✅ Certificate of Completion</li>
+                </ul>
+                
+                <a href="https://forms.gle/YOUR_FORM_ID" class="cta-button" target="_blank">
+                    🚀 Enroll Now - $199
+                </a>
+                
+                <p class="guarantee">🔒 30-Day Money Back Guarantee</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <h2 class="section-title">❓ Frequently Asked Questions</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Do I need technical skills? <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Not at all! AI tools are designed for non-technical users. If you can type and follow instructions, you can succeed. We use no-code tools and provide step-by-step guidance.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How much time do I need? <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Plan for 5-10 hours per week: 90-minute live session + implementation time. The more you put in, the faster you'll see results. Many members work full-time jobs while doing this.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        What if I can't make live sessions? <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        All sessions are recorded and available within 24 hours. You also have your accountability group to catch you up on anything you missed.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Is the $10K guarantee realistic? <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        It's a target, not a guarantee. Results depend on your effort. Our top performers hit $10K in month 2. Average committed members see $3-5K in 90 days. Even $1K covers your investment 5x.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        When does the next cohort start? <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        New cohorts start monthly. Early bird pricing is only available before seats fill. Join now to lock in $199 (regular $350).
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Final CTA -->
+    <section class="final-cta">
+        <div class="container">
+            <h2>Your AI Journey Starts Now</h2>
+            <p>In 90 days, you'll either wish you started today... or be celebrating your first AI income 🎉</p>
+            
+            <div class="countdown">
+                <div class="countdown-item">
+                    <div class="number" id="spots">17</div>
+                    <div class="label">Spots Left</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="number">$151</div>
+                    <div class="label">You Save</div>
+                </div>
+            </div>
+            
+            <a href="https://forms.gle/YOUR_FORM_ID" class="cta-button" target="_blank">
+                🚀 Join AI Prosperity Project - $199
+            </a>
+            
+            <p style="margin-top: 20px; font-size: 0.9rem; opacity: 0.8;">
+                30-Day Money Back Guarantee • Instant Access • Lifetime Updates
+            </p>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>© 2026 Divine Success Flow. All rights reserved.</p>
+            <p style="margin-top: 10px;">Questions? WhatsApp: +91 XXXXXXXXXX | Email: hello@divinesuccessflow.com</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Simple FAQ toggle
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                answer.style.display = answer.style.display === 'none' ? 'block' : 'none';
+            });
+        });
+        
+        // Initialize FAQ - hide answers
+        document.querySelectorAll('.faq-answer').forEach(answer => {
+            answer.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
