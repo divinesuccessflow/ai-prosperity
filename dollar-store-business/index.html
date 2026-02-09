@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Dollar Store Business | Start Your $0.20 → $5 Empire</title>
+    <meta name="description" content="Launch your own dollar store business sourcing products from China at $0.20 and selling at $5+. Complete AI-powered business setup with verified suppliers.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #10B981;
+            --primary-dark: #059669;
+            --secondary: #F59E0B;
+            --dark: #111827;
+            --gray: #6B7280;
+            --light: #F9FAFB;
+            --white: #FFFFFF;
+        }
+        body { font-family: 'Inter', sans-serif; color: var(--dark); line-height: 1.6; }
+        
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, #111827 0%, #1F2937 100%);
+            padding: 80px 20px 100px;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="%2310B981" opacity="0.3"/></svg>');
+            background-size: 50px 50px;
+            opacity: 0.5;
+        }
+        .hero-content { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 25px;
+        }
+        .hero h1 .highlight {
+            color: var(--primary);
+        }
+        .hero h1 .money {
+            color: var(--secondary);
+        }
+        .hero p {
+            font-size: 1.25rem;
+            color: #9CA3AF;
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+        .hero-cta {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 18px 50px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 10px 40px rgba(16, 185, 129, 0.3);
+        }
+        .hero-cta:hover { transform: translateY(-3px); box-shadow: 0 15px 50px rgba(16, 185, 129, 0.4); }
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin-top: 60px;
+            flex-wrap: wrap;
+        }
+        .hero-stat { text-align: center; }
+        .hero-stat-value { font-size: 2.5rem; font-weight: 800; color: var(--primary); }
+        .hero-stat-label { color: #9CA3AF; font-size: 0.9rem; }
+        
+        /* Math Section */
+        .math-section {
+            padding: 80px 20px;
+            background: var(--primary);
+            color: white;
+            text-align: center;
+        }
+        .math-container { max-width: 800px; margin: 0 auto; }
+        .math-equation {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 30px;
+        }
+        .math-explanation {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        /* How It Works */
+        .how-it-works {
+            padding: 100px 20px;
+            background: white;
+        }
+        .section-container { max-width: 1100px; margin: 0 auto; }
+        .section-header { text-align: center; margin-bottom: 60px; }
+        .section-label {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+        .section-header p { color: var(--gray); font-size: 1.1rem; }
+        
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+        .step {
+            text-align: center;
+            padding: 40px 30px;
+            background: var(--light);
+            border-radius: 20px;
+            position: relative;
+        }
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin: 0 auto 20px;
+        }
+        .step h3 { font-size: 1.3rem; margin-bottom: 10px; }
+        .step p { color: var(--gray); font-size: 0.95rem; }
+        
+        /* What You Get */
+        .what-you-get {
+            padding: 100px 20px;
+            background: var(--light);
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .feature {
+            background: white;
+            padding: 35px;
+            border-radius: 16px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+        .feature h3 { font-size: 1.2rem; margin-bottom: 10px; }
+        .feature p { color: var(--gray); font-size: 0.95rem; }
+        
+        /* Countries */
+        .countries {
+            padding: 80px 20px;
+            background: white;
+            text-align: center;
+        }
+        .countries h2 { font-size: 2rem; margin-bottom: 40px; }
+        .flags {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            font-size: 3rem;
+        }
+        .flag-item { text-align: center; }
+        .flag-label { font-size: 0.9rem; color: var(--gray); margin-top: 10px; }
+        
+        /* Pricing */
+        .pricing {
+            padding: 100px 20px;
+            background: linear-gradient(135deg, #111827 0%, #1F2937 100%);
+            color: white;
+        }
+        .pricing .section-header h2 { color: white; }
+        .pricing .section-header p { color: #9CA3AF; }
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .pricing-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 24px;
+            padding: 40px;
+            position: relative;
+            transition: all 0.3s;
+        }
+        .pricing-card:hover { transform: translateY(-5px); border-color: var(--primary); }
+        .pricing-card.featured {
+            background: white;
+            color: var(--dark);
+            transform: scale(1.05);
+            border: 3px solid var(--primary);
+        }
+        .pricing-card.featured:hover { transform: scale(1.05) translateY(-5px); }
+        .popular-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--secondary);
+            color: var(--dark);
+            padding: 8px 25px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+        .pricing-icon { font-size: 2.5rem; margin-bottom: 15px; }
+        .pricing-name { font-size: 1.4rem; font-weight: 700; margin-bottom: 10px; }
+        .pricing-price { font-size: 3rem; font-weight: 800; margin-bottom: 5px; }
+        .pricing-price span { font-size: 1rem; font-weight: 500; opacity: 0.7; }
+        .pricing-desc { font-size: 0.9rem; opacity: 0.7; margin-bottom: 30px; }
+        .pricing-features { list-style: none; margin-bottom: 30px; text-align: left; }
+        .pricing-features li {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95rem;
+        }
+        .pricing-card.featured .pricing-features li { border-color: #E5E7EB; }
+        .pricing-features li::before { content: '✓'; color: var(--primary); font-weight: 700; }
+        .pricing-btn {
+            width: 100%;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+        }
+        .pricing-btn.primary { background: var(--primary); color: white; }
+        .pricing-btn.secondary { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
+        .pricing-btn:hover { transform: translateY(-2px); }
+        
+        /* Guarantee */
+        .guarantee {
+            padding: 80px 20px;
+            background: #ECFDF5;
+            text-align: center;
+        }
+        .guarantee-content { max-width: 700px; margin: 0 auto; }
+        .guarantee-icon { font-size: 4rem; margin-bottom: 20px; }
+        .guarantee h2 { font-size: 2rem; margin-bottom: 15px; color: var(--primary-dark); }
+        .guarantee p { font-size: 1.1rem; color: var(--gray); }
+        
+        /* FAQ */
+        .faq {
+            padding: 100px 20px;
+            background: white;
+        }
+        .faq-grid { max-width: 800px; margin: 0 auto; }
+        .faq-item {
+            border-bottom: 1px solid #E5E7EB;
+            padding: 25px 0;
+        }
+        .faq-question {
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .faq-question::after { content: '+'; font-size: 1.5rem; color: var(--primary); }
+        .faq-answer { padding-top: 15px; color: var(--gray); display: none; }
+        .faq-item.open .faq-answer { display: block; }
+        .faq-item.open .faq-question::after { content: '−'; }
+        
+        /* Final CTA */
+        .final-cta {
+            padding: 100px 20px;
+            background: var(--primary);
+            text-align: center;
+            color: white;
+        }
+        .final-cta h2 { font-size: 2.5rem; font-weight: 800; margin-bottom: 20px; }
+        .final-cta p { font-size: 1.2rem; opacity: 0.9; max-width: 600px; margin: 0 auto 40px; }
+        .final-cta-btn {
+            display: inline-block;
+            background: white;
+            color: var(--primary);
+            padding: 20px 60px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .final-cta-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        
+        /* Footer */
+        footer {
+            padding: 40px 20px;
+            background: var(--dark);
+            color: #9CA3AF;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+            .pricing-card.featured { transform: none; }
+            .pricing-card.featured:hover { transform: translateY(-5px); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <span class="hero-badge">🚀 AI-Powered Business Setup</span>
+            <h1>Start Your <span class="highlight">Dollar Store Empire</span><br>Sourcing at <span class="money">$0.20</span></h1>
+            <p>Get verified Chinese suppliers, AI-powered product selection, and complete business setup. Launch in any country with 70%+ margins.</p>
+            <a href="#pricing" class="hero-cta">Get Started — From $297</a>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="hero-stat-value">100+</div>
+                    <div class="hero-stat-label">Verified Suppliers</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-value">70%+</div>
+                    <div class="hero-stat-label">Profit Margins</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-value">30 Days</div>
+                    <div class="hero-stat-label">To First Sale</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Math Section -->
+    <section class="math-section">
+        <div class="math-container">
+            <div class="math-equation">
+                $0.20 → $2.00 = <strong>900% Profit</strong>
+            </div>
+            <p class="math-explanation">
+                Buy products from Yiwu, China at $0.20. Sell them at $1-5 in your local market.<br>
+                <strong>The math is simple. The opportunity is massive.</strong>
+            </p>
+        </div>
+    </section>
+    
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <div class="section-container">
+            <div class="section-header">
+                <div class="section-label">How It Works</div>
+                <h2>4 Steps to Your Dollar Store</h2>
+                <p>We handle the hard parts. You focus on selling.</p>
+            </div>
+            <div class="steps-grid">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Choose Your Package</h3>
+                    <p>DIY, Guided, or Done-For-You. We have options for every budget.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Get Supplier Access</h3>
+                    <p>Receive 100+ verified Chinese suppliers with WhatsApp contacts.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Select Products</h3>
+                    <p>Use our AI tools to pick winning products for your market.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Launch & Sell</h3>
+                    <p>Import your first order and start making 70%+ margins.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- What You Get -->
+    <section class="what-you-get">
+        <div class="section-container">
+            <div class="section-header">
+                <div class="section-label">What You Get</div>
+                <h2>Everything You Need to Launch</h2>
+            </div>
+            <div class="features-grid">
+                <div class="feature">
+                    <div class="feature-icon">🏭</div>
+                    <h3>100+ Verified Suppliers</h3>
+                    <p>Direct WhatsApp contacts to factories in Yiwu, China. Skip the middlemen.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI Product Selection</h3>
+                    <p>Our AI analyzes trends to find products that sell fast in your market.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">📦</div>
+                    <h3>Import/Export Training</h3>
+                    <p>Step-by-step guidance on customs, duties, and shipping for your country.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">📋</div>
+                    <h3>Business Plan Template</h3>
+                    <p>Customized financial projections and launch roadmap for your location.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Marketing Templates</h3>
+                    <p>Ready-to-use social media posts, ads, and sales scripts.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">💬</div>
+                    <h3>Community Access</h3>
+                    <p>Join other dollar store entrepreneurs. Share tips, deals, and wins.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Countries -->
+    <section class="countries">
+        <h2>Works in Any Country 🌍</h2>
+        <div class="flags">
+            <div class="flag-item">
+                <div>🇿🇦</div>
+                <div class="flag-label">South Africa</div>
+            </div>
+            <div class="flag-item">
+                <div>🇮🇳</div>
+                <div class="flag-label">India</div>
+            </div>
+            <div class="flag-item">
+                <div>🇳🇬</div>
+                <div class="flag-label">Nigeria</div>
+            </div>
+            <div class="flag-item">
+                <div>🇦🇪</div>
+                <div class="flag-label">UAE</div>
+            </div>
+            <div class="flag-item">
+                <div>🇬🇧</div>
+                <div class="flag-label">UK</div>
+            </div>
+            <div class="flag-item">
+                <div>🇺🇸</div>
+                <div class="flag-label">USA</div>
+            </div>
+            <div class="flag-item">
+                <div>🇰🇪</div>
+                <div class="flag-label">Kenya</div>
+            </div>
+            <div class="flag-item">
+                <div>🇵🇭</div>
+                <div class="flag-label">Philippines</div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Pricing -->
+    <section class="pricing" id="pricing">
+        <div class="section-container">
+            <div class="section-header">
+                <div class="section-label" style="color: var(--primary);">Pricing</div>
+                <h2>Choose Your Path</h2>
+                <p>Start with what fits your budget. Upgrade anytime.</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-icon">📦</div>
+                    <div class="pricing-name">DIY Kit</div>
+                    <div class="pricing-price">$297</div>
+                    <div class="pricing-desc">Everything you need to do it yourself</div>
+                    <ul class="pricing-features">
+                        <li>Complete business plan PDF</li>
+                        <li>50 verified suppliers</li>
+                        <li>Import/export checklist</li>
+                        <li>5 video training modules</li>
+                        <li>Marketing templates</li>
+                        <li>Community access</li>
+                    </ul>
+                    <a href="https://www.paypal.com/ncp/payment/XXXXXXX" class="pricing-btn secondary">Get DIY Kit</a>
+                </div>
+                <div class="pricing-card featured">
+                    <span class="popular-badge">⭐ MOST POPULAR</span>
+                    <div class="pricing-icon">🚀</div>
+                    <div class="pricing-name">Guided Setup</div>
+                    <div class="pricing-price">$997</div>
+                    <div class="pricing-desc">We guide you step-by-step</div>
+                    <ul class="pricing-features">
+                        <li>Everything in DIY Kit</li>
+                        <li>100+ verified suppliers</li>
+                        <li>3x strategy calls (1 hour each)</li>
+                        <li>AI product selection help</li>
+                        <li>First supplier introduction</li>
+                        <li>30-day WhatsApp support</li>
+                        <li>Country-specific guidance</li>
+                    </ul>
+                    <a href="https://www.paypal.com/ncp/payment/XXXXXXX" class="pricing-btn primary">Get Guided Setup</a>
+                </div>
+                <div class="pricing-card">
+                    <div class="pricing-icon">💎</div>
+                    <div class="pricing-name">Done-For-You</div>
+                    <div class="pricing-price">$2,997</div>
+                    <div class="pricing-desc">We set up everything for you</div>
+                    <ul class="pricing-features">
+                        <li>Everything in Guided Setup</li>
+                        <li>We register your company</li>
+                        <li>We contact suppliers for you</li>
+                        <li>We place first sample order</li>
+                        <li>We create your online store</li>
+                        <li>We run first marketing campaign</li>
+                        <li>90-day full support</li>
+                    </ul>
+                    <a href="https://www.paypal.com/ncp/payment/XXXXXXX" class="pricing-btn secondary">Get Done-For-You</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Guarantee -->
+    <section class="guarantee">
+        <div class="guarantee-content">
+            <div class="guarantee-icon">🛡️</div>
+            <h2>30-Day Money-Back Guarantee</h2>
+            <p>If you follow our process and don't feel confident about launching your dollar store within 30 days, we'll refund every penny. No questions asked.</p>
+        </div>
+    </section>
+    
+    <!-- FAQ -->
+    <section class="faq">
+        <div class="section-container">
+            <div class="section-header">
+                <div class="section-label">FAQ</div>
+                <h2>Common Questions</h2>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <div class="faq-question">How much money do I need to start?</div>
+                    <div class="faq-answer">Beyond our package, plan for $1,000-3,000 for your first sample orders and initial inventory. The exact amount depends on your country and product selection.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Do I need experience in importing?</div>
+                    <div class="faq-answer">No! We guide you through the entire process. Our training covers everything from finding suppliers to clearing customs in your country.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">How long until I can start selling?</div>
+                    <div class="faq-answer">Most people receive their first samples within 2-3 weeks and start selling within 30-45 days of joining.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">What if the suppliers don't respond?</div>
+                    <div class="faq-answer">All our suppliers are verified and actively responding. If any supplier becomes unresponsive, we provide replacements at no extra cost.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Can I do this part-time?</div>
+                    <div class="faq-answer">Absolutely! Many of our members start part-time while keeping their day job. Once you're profitable, you can decide to go full-time.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">What products can I sell?</div>
+                    <div class="faq-answer">Anything from toys, stationery, kitchen items, home decor, electronics accessories, and more. We help you pick products that sell in YOUR market.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Final CTA -->
+    <section class="final-cta">
+        <h2>Ready to Start Your Dollar Store?</h2>
+        <p>Join hundreds of entrepreneurs already building profitable businesses with our AI-powered system.</p>
+        <a href="#pricing" class="final-cta-btn">Get Started Now →</a>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 Divine Success Flow. All rights reserved.</p>
+        <p style="margin-top: 10px;">Questions? WhatsApp us: [YOUR NUMBER]</p>
+    </footer>
+    
+    <script>
+        // FAQ Toggle
+        document.querySelectorAll('.faq-question').forEach(q => {
+            q.addEventListener('click', () => {
+                q.parentElement.classList.toggle('open');
+            });
+        });
+        
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
