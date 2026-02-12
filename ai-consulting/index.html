@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Transformation Program | Divine Success Flow</title>
+    <meta name="description" content="Install AI employees that work 24/7. Custom AI systems built for YOUR business in 30 days. 10X ROI guaranteed.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --black: #0A0A0F;
+            --gold: #C9A84C;
+            --gold-light: #E5D4A1;
+            --white: #FFFFFF;
+            --gray: rgba(255,255,255,0.7);
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--black);
+            color: var(--white);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header */
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            border-bottom: 1px solid rgba(201,168,76,0.2);
+        }
+        
+        .logo {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .brand {
+            color: var(--gold);
+            font-weight: 700;
+            letter-spacing: 2px;
+            font-size: 14px;
+        }
+        
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 80px 20px;
+        }
+        
+        .hero h1 {
+            font-size: clamp(32px, 6vw, 56px);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+        
+        .hero h1 span {
+            color: var(--gold);
+        }
+        
+        .hero .subtitle {
+            font-size: 20px;
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--black);
+            font-size: 18px;
+            font-weight: 700;
+            padding: 18px 48px;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(201,168,76,0.3);
+        }
+        
+        /* Problem Section */
+        .section {
+            padding: 80px 20px;
+            border-bottom: 1px solid rgba(201,168,76,0.1);
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 14px;
+            color: var(--gold);
+            letter-spacing: 3px;
+            margin-bottom: 16px;
+        }
+        
+        .section h2 {
+            text-align: center;
+            font-size: clamp(28px, 5vw, 40px);
+            font-weight: 800;
+            margin-bottom: 48px;
+        }
+        
+        .problems {
+            display: grid;
+            gap: 24px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .problem-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 24px;
+            background: rgba(201,168,76,0.05);
+            border-left: 3px solid var(--gold);
+            border-radius: 0 12px 12px 0;
+        }
+        
+        .problem-icon {
+            font-size: 28px;
+            flex-shrink: 0;
+        }
+        
+        .problem-item h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+        
+        .problem-item p {
+            color: var(--gray);
+            font-size: 15px;
+        }
+        
+        /* Transformation */
+        .transformation {
+            background: linear-gradient(180deg, rgba(201,168,76,0.1) 0%, transparent 100%);
+        }
+        
+        .phases {
+            display: grid;
+            gap: 32px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .phase {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 24px;
+            align-items: start;
+        }
+        
+        .phase-number {
+            width: 80px;
+            height: 80px;
+            background: var(--gold);
+            color: var(--black);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 900;
+        }
+        
+        .phase-content h3 {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+        
+        .phase-content .week {
+            color: var(--gold);
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        
+        .phase-content p {
+            color: var(--gray);
+        }
+        
+        /* Proof */
+        .proof-box {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px;
+            background: rgba(201,168,76,0.08);
+            border: 1px solid rgba(201,168,76,0.2);
+            border-radius: 16px;
+            text-align: center;
+        }
+        
+        .proof-box .quote {
+            font-size: 24px;
+            font-style: italic;
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+        
+        .proof-box .result {
+            font-size: 48px;
+            font-weight: 900;
+            color: var(--gold);
+            margin-bottom: 8px;
+        }
+        
+        .proof-box .result-label {
+            color: var(--gray);
+        }
+        
+        /* Offer */
+        .offer-box {
+            max-width: 600px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, rgba(201,168,76,0.15) 0%, rgba(201,168,76,0.05) 100%);
+            border: 2px solid var(--gold);
+            border-radius: 24px;
+            padding: 48px 40px;
+            text-align: center;
+        }
+        
+        .offer-title {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 32px;
+        }
+        
+        .offer-items {
+            text-align: left;
+            margin-bottom: 40px;
+        }
+        
+        .offer-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .offer-item:last-child {
+            border-bottom: none;
+        }
+        
+        .check {
+            width: 28px;
+            height: 28px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--black);
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .offer-item span {
+            font-size: 17px;
+        }
+        
+        .offer-item .value {
+            margin-left: auto;
+            color: var(--gray);
+            font-size: 14px;
+        }
+        
+        .price-section {
+            margin-bottom: 32px;
+        }
+        
+        .price-label {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 8px;
+        }
+        
+        .price {
+            font-size: 56px;
+            font-weight: 900;
+            color: var(--gold);
+        }
+        
+        .price-note {
+            font-size: 14px;
+            color: var(--gray);
+            margin-top: 8px;
+        }
+        
+        .guarantee {
+            background: rgba(0,0,0,0.3);
+            padding: 16px 24px;
+            border-radius: 12px;
+            margin-bottom: 32px;
+            font-size: 15px;
+        }
+        
+        .guarantee strong {
+            color: var(--gold);
+        }
+        
+        /* Footer CTA */
+        .final-cta {
+            text-align: center;
+            padding: 80px 20px;
+        }
+        
+        .final-cta h2 {
+            font-size: clamp(24px, 5vw, 36px);
+            margin-bottom: 16px;
+        }
+        
+        .final-cta p {
+            color: var(--gray);
+            margin-bottom: 32px;
+        }
+        
+        .spots {
+            display: inline-block;
+            background: rgba(201,168,76,0.2);
+            color: var(--gold);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 32px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid rgba(201,168,76,0.1);
+            color: var(--gray);
+            font-size: 14px;
+        }
+        
+        footer a {
+            color: var(--gold);
+            text-decoration: none;
+        }
+        
+        @media (max-width: 600px) {
+            .phase {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .phase-number {
+                margin: 0 auto 16px;
+            }
+            .offer-box {
+                padding: 32px 24px;
+            }
+            .price {
+                font-size: 44px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">☀️</div>
+        <div class="brand">DIVINE SUCCESS FLOW</div>
+    </header>
+    
+    <section class="hero">
+        <div class="container">
+            <h1>Stop Working <span>IN</span> Your Business.<br>Start Working <span>ON</span> It.</h1>
+            <p class="subtitle">Install AI employees that work 24/7, never call in sick, and cost 90% less than humans.</p>
+            <a href="#offer" class="cta-button">Get Your AI Team →</a>
+        </div>
+    </section>
+    
+    <section class="section">
+        <div class="container">
+            <div class="section-title">THE PROBLEM</div>
+            <h2>Sound Familiar?</h2>
+            <div class="problems">
+                <div class="problem-item">
+                    <span class="problem-icon">⏰</span>
+                    <div>
+                        <h3>40+ Hours on Repetitive Tasks</h3>
+                        <p>You're doing work that should be automated. Lead follow-ups, scheduling, data entry, content creation...</p>
+                    </div>
+                </div>
+                <div class="problem-item">
+                    <span class="problem-icon">📈</span>
+                    <div>
+                        <h3>Can't Scale Without Hiring</h3>
+                        <p>Every new client means more work. You're the bottleneck. Growth feels impossible.</p>
+                    </div>
+                </div>
+                <div class="problem-item">
+                    <span class="problem-icon">🏃</span>
+                    <div>
+                        <h3>Competitors Are Pulling Ahead</h3>
+                        <p>They're using AI. You're not. The gap is widening every day.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="section transformation">
+        <div class="container">
+            <div class="section-title">THE TRANSFORMATION</div>
+            <h2>30 Days to AI-Powered Business</h2>
+            <div class="phases">
+                <div class="phase">
+                    <div class="phase-number">1</div>
+                    <div class="phase-content">
+                        <div class="week">WEEK 1</div>
+                        <h3>AI Audit</h3>
+                        <p>We analyze your business and find $50K+ in hidden inefficiencies. You'll see exactly where AI can save you time and money.</p>
+                    </div>
+                </div>
+                <div class="phase">
+                    <div class="phase-number">2</div>
+                    <div class="phase-content">
+                        <div class="week">WEEK 2-3</div>
+                        <h3>Custom Build</h3>
+                        <p>We build AI systems tailored to YOUR business. Not generic software — custom automation that fits how you work.</p>
+                    </div>
+                </div>
+                <div class="phase">
+                    <div class="phase-number">3</div>
+                    <div class="phase-content">
+                        <div class="week">WEEK 4</div>
+                        <h3>Deploy & Train</h3>
+                        <p>We deploy your AI systems, test everything, and train your team. You walk away with a machine that runs without you.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="section">
+        <div class="container">
+            <div class="section-title">THE PROOF</div>
+            <h2>Real Results</h2>
+            <div class="proof-box">
+                <p class="quote">"I was spending 40 hours a week on lead follow-up. Now? Zero. The AI handles everything. I closed an extra $200K last quarter."</p>
+                <div class="result">10X</div>
+                <div class="result-label">Return on Investment</div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="section" id="offer">
+        <div class="container">
+            <div class="section-title">THE OFFER</div>
+            <h2>AI Transformation Package</h2>
+            <div class="offer-box">
+                <div class="offer-title">Everything You Need to Transform</div>
+                <div class="offer-items">
+                    <div class="offer-item">
+                        <span class="check">✓</span>
+                        <span>Complete AI Business Audit</span>
+                        <span class="value">$1,500 value</span>
+                    </div>
+                    <div class="offer-item">
+                        <span class="check">✓</span>
+                        <span>Custom AI Systems Built For You</span>
+                        <span class="value">$5,000 value</span>
+                    </div>
+                    <div class="offer-item">
+                        <span class="check">✓</span>
+                        <span>30-Day Implementation</span>
+                        <span class="value">$2,000 value</span>
+                    </div>
+                    <div class="offer-item">
+                        <span class="check">✓</span>
+                        <span>Team Training & Documentation</span>
+                        <span class="value">$1,000 value</span>
+                    </div>
+                    <div class="offer-item">
+                        <span class="check">✓</span>
+                        <span>90-Day Priority Support</span>
+                        <span class="value">$2,500 value</span>
+                    </div>
+                </div>
+                <div class="price-section">
+                    <div class="price-label">Total Value: $12,000</div>
+                    <div class="price">$3,000</div>
+                    <div class="price-note">Payment plans available: $1,200 x 3</div>
+                </div>
+                <div class="guarantee">
+                    <strong>🛡️ 10X ROI Guarantee:</strong> If you don't save at least 10 hours/week within 30 days, we'll work for free until you do.
+                </div>
+                <a href="https://cal.com/divinesuccessflow/ai-consultation" class="cta-button">Book Your Strategy Call →</a>
+            </div>
+        </div>
+    </section>
+    
+    <section class="final-cta">
+        <div class="container">
+            <div class="spots">⚡ Only 3 spots available this month</div>
+            <h2>Ready to Install Your AI Team?</h2>
+            <p>Book a free 15-minute strategy call. No pitch — just clarity on how AI can transform your business.</p>
+            <a href="https://cal.com/divinesuccessflow/ai-consultation" class="cta-button">Book Free Strategy Call →</a>
+        </div>
+    </section>
+    
+    <footer>
+        <p>☀️ <a href="https://divinesuccessflow.com">Divine Success Flow</a> — AI Transformation for Ambitious Entrepreneurs</p>
+        <p style="margin-top: 8px;">© 2026 Divine Success Flow. All rights reserved.</p>
+    </footer>
+</body>
+</html>
