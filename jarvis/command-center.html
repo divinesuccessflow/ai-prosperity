@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Jarvis Command Center</title>
+<meta name="description" content="Your AI operations dashboard: workflow audit, follow-up engine, and automation pipeline in one place."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #060a14;
+    --bg-2: #0b1120;
+    --card: #101a30;
+    --card-2: #16223c;
+    --line: rgba(94, 234, 212, 0.12);
+    --cyan: #22d3ee;
+    --teal: #5eead4;
+    --gold: #fbbf24;
+    --pink: #f472b6;
+    --red: #f87171;
+    --green: #4ade80;
+    --text: #e6edf7;
+    --muted: #94a3b8;
+    --r: 16px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+  button { font-family: inherit; }
+  .container { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+
+  /* ---------- Top bar ---------- */
+  header {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(6, 10, 20, 0.9); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  .topbar { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; max-width: 1180px; margin: 0 auto; }
+  .logo { font-weight: 900; font-size: 1.05rem; letter-spacing: 0.02em; display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); }
+  .logo-dot { width: 11px; height: 11px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 12px var(--cyan); animation: pulse 2.4s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
+  .logo small { color: var(--muted); font-weight: 500; font-size: 0.75rem; }
+  .top-actions { display: flex; gap: 10px; align-items: center; }
+  .top-actions a, .btn-small {
+    font-size: 0.8rem; font-weight: 600; color: var(--muted); text-decoration: none;
+    padding: 7px 14px; border-radius: 10px; border: 1px solid transparent; background: none; cursor: pointer;
+  }
+  .top-actions a:hover, .btn-small:hover { color: var(--text); border-color: var(--line); }
+  .btn-book { background: linear-gradient(135deg, var(--cyan), var(--teal)); color: #04141a !important; font-weight: 700; }
+
+  /* ---------- Jarvis says ---------- */
+  .jarvis-says {
+    margin: 24px auto 0; max-width: 1180px; padding: 0 20px;
+  }
+  .jarvis-says-inner {
+    display: flex; gap: 14px; align-items: flex-start;
+    background: linear-gradient(135deg, rgba(34, 211, 238, 0.1), rgba(94, 234, 212, 0.04));
+    border: 1px solid rgba(34, 211, 238, 0.3); border-radius: var(--r); padding: 16px 20px;
+  }
+  .jarvis-says .j-avatar { font-size: 1.4rem; line-height: 1.4; }
+  .jarvis-says .j-label { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.12em; color: var(--cyan); text-transform: uppercase; margin-bottom: 2px; }
+  .jarvis-says .j-text { font-size: 0.95rem; }
+  .jarvis-says .j-text strong { color: var(--teal); }
+
+  /* ---------- Stats ---------- */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin: 24px 0; }
+  .stat {
+    background: var(--card); border: 1px solid var(--line); border-radius: var(--r); padding: 20px 22px;
+  }
+  .stat .s-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .stat .s-value { font-size: 2rem; font-weight: 900; line-height: 1.1; }
+  .stat .s-value small { font-size: 0.95rem; font-weight: 600; color: var(--muted); }
+  .stat .s-note { font-size: 0.78rem; color: var(--muted); margin-top: 6px; }
+  .stat.accent-red .s-value { color: var(--pink); }
+  .stat.accent-green .s-value { color: var(--green); }
+  .stat.accent-cyan .s-value { color: var(--cyan); }
+  .stat.accent-gold .s-value { color: var(--gold); }
+
+  /* ---------- Panels ---------- */
+  main { padding-bottom: 64px; }
+  .panels { display: grid; grid-template-columns: 1.15fr 1fr; gap: 20px; align-items: start; }
+  @media (max-width: 900px) { .panels { grid-template-columns: 1fr; } }
+  .panel { background: var(--card); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; }
+  .panel + .panel { margin-top: 20px; }
+  .panel-head { display: flex; align-items: center; justify-content: space-between; padding: 18px 22px; border-bottom: 1px solid var(--line); }
+  .panel-head h2 { font-size: 1rem; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+  .panel-head .count { font-size: 0.75rem; font-weight: 700; color: var(--muted); background: var(--card-2); border-radius: 20px; padding: 3px 10px; }
+  .panel-body { padding: 18px 22px 22px; }
+
+  /* ---------- Forms ---------- */
+  .form-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+  input, select {
+    background: var(--bg-2); border: 1px solid var(--line); border-radius: 10px;
+    color: var(--text); padding: 10px 12px; font-size: 0.88rem; font-family: inherit; outline: none;
+  }
+  input:focus, select:focus { border-color: var(--cyan); }
+  input::placeholder { color: #5b6b82; }
+  input[type="number"] { width: 92px; }
+  input[type="date"] { color-scheme: dark; }
+  .flex-grow { flex: 1; min-width: 140px; }
+  .btn-add {
+    background: linear-gradient(135deg, var(--cyan), var(--teal)); color: #04141a;
+    border: none; border-radius: 10px; font-weight: 800; font-size: 0.88rem;
+    padding: 10px 18px; cursor: pointer; transition: transform 0.12s ease;
+  }
+  .btn-add:hover { transform: translateY(-1px); }
+
+  /* ---------- Item rows ---------- */
+  .item-list { display: grid; gap: 10px; }
+  .item {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--card-2); border: 1px solid transparent; border-radius: 12px; padding: 12px 14px;
+  }
+  .item .i-main { flex: 1; min-width: 0; }
+  .item .i-title { font-weight: 700; font-size: 0.92rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .item .i-sub { font-size: 0.78rem; color: var(--muted); }
+  .item .i-metric { font-weight: 800; font-size: 0.9rem; white-space: nowrap; }
+  .tag { font-size: 0.68rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 9px; border-radius: 20px; white-space: nowrap; }
+  .tag-overdue { background: rgba(248, 113, 113, 0.15); color: var(--red); }
+  .tag-today { background: rgba(251, 191, 36, 0.15); color: var(--gold); }
+  .tag-upcoming { background: rgba(34, 211, 238, 0.12); color: var(--cyan); }
+  .tag-done { background: rgba(74, 222, 128, 0.14); color: var(--green); }
+  .tag-identified { background: rgba(148, 163, 184, 0.15); color: var(--muted); }
+  .tag-building { background: rgba(251, 191, 36, 0.15); color: var(--gold); }
+  .tag-live { background: rgba(74, 222, 128, 0.14); color: var(--green); }
+  .item.overdue { border-color: rgba(248, 113, 113, 0.4); }
+  .item.top-candidate { border-color: rgba(251, 191, 36, 0.45); }
+  .icon-btn {
+    background: none; border: 1px solid var(--line); color: var(--muted); border-radius: 8px;
+    width: 30px; height: 30px; cursor: pointer; font-size: 0.85rem; line-height: 1; flex-shrink: 0;
+  }
+  .icon-btn:hover { color: var(--text); border-color: var(--muted); }
+  .icon-btn.act { color: var(--teal); border-color: rgba(94, 234, 212, 0.35); }
+  .icon-btn.act:hover { background: rgba(94, 234, 212, 0.1); }
+  .empty { text-align: center; color: var(--muted); font-size: 0.88rem; padding: 24px 10px; }
+  .empty strong { color: var(--text); }
+
+  /* ---------- Audit bar ---------- */
+  .audit-bar-wrap { margin-top: 4px; height: 6px; border-radius: 4px; background: var(--bg-2); overflow: hidden; }
+  .audit-bar { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--cyan), var(--pink)); }
+
+  footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 24px 20px 40px; }
+  footer a { color: var(--teal); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="topbar">
+    <a class="logo" href="index.html"><span class="logo-dot"></span>JARVIS <small>/ Command Center</small></a>
+    <div class="top-actions">
+      <button class="btn-small" id="btn-demo" title="Load sample data">Load demo data</button>
+      <button class="btn-small" id="btn-reset" title="Clear all data">Reset</button>
+      <a class="btn-book" href="https://calendly.com/divineteams/discovery" target="_blank" rel="noopener">Book Full Setup</a>
+    </div>
+  </div>
+</header>
+
+<div class="jarvis-says">
+  <div class="jarvis-says-inner">
+    <div class="j-avatar">🤖</div>
+    <div>
+      <div class="j-label">Jarvis says</div>
+      <div class="j-text" id="jarvis-insight">Booting up…</div>
+    </div>
+  </div>
+</div>
+
+<main class="container">
+  <div class="stats">
+    <div class="stat accent-red">
+      <div class="s-label">Hours lost / week</div>
+      <div class="s-value"><span id="stat-lost">0</span><small> hrs</small></div>
+      <div class="s-note">Manual work still on your plate</div>
+    </div>
+    <div class="stat accent-green">
+      <div class="s-label">Hours reclaimed / week</div>
+      <div class="s-value"><span id="stat-reclaimed">0</span><small> hrs</small></div>
+      <div class="s-note">Handled by live automations</div>
+    </div>
+    <div class="stat accent-cyan">
+      <div class="s-label">Follow-ups on watch</div>
+      <div class="s-value"><span id="stat-followups">0</span></div>
+      <div class="s-note" id="stat-followups-note">Nothing slips through</div>
+    </div>
+    <div class="stat accent-gold">
+      <div class="s-label">Operating leverage</div>
+      <div class="s-value"><span id="stat-leverage">0%</span></div>
+      <div class="s-note">Share of tracked work automated</div>
+    </div>
+  </div>
+
+  <div class="panels">
+    <div>
+      <!-- Workflow Audit -->
+      <section class="panel">
+        <div class="panel-head">
+          <h2>🔍 Workflow Audit</h2>
+          <span class="count" id="audit-count">0 tasks</span>
+        </div>
+        <div class="panel-body">
+          <form class="form-row" id="audit-form">
+            <input class="flex-grow" id="audit-name" placeholder="Recurring task (e.g. Send invoices)" required maxlength="80"/>
+            <input type="number" id="audit-mins" placeholder="Mins" min="1" max="600" required title="Minutes per occurrence"/>
+            <input type="number" id="audit-times" placeholder="×/wk" min="1" max="100" required title="Times per week"/>
+            <button class="btn-add" type="submit">Add</button>
+          </form>
+          <div class="item-list" id="audit-list"></div>
+        </div>
+      </section>
+
+      <!-- Automation Pipeline -->
+      <section class="panel">
+        <div class="panel-head">
+          <h2>⚡ Automation Pipeline</h2>
+          <span class="count" id="pipeline-count">0 live</span>
+        </div>
+        <div class="panel-body">
+          <div class="item-list" id="pipeline-list"></div>
+        </div>
+      </section>
+    </div>
+
+    <div>
+      <!-- Follow-up Engine -->
+      <section class="panel">
+        <div class="panel-head">
+          <h2>📬 Follow-up Engine</h2>
+          <span class="count" id="fu-count">0 open</span>
+        </div>
+        <div class="panel-body">
+          <form class="form-row" id="fu-form">
+            <input class="flex-grow" id="fu-who" placeholder="Who (e.g. Sarah @ Acme)" required maxlength="60"/>
+            <input class="flex-grow" id="fu-about" placeholder="About (e.g. proposal)" required maxlength="80"/>
+            <input type="date" id="fu-date" required/>
+            <button class="btn-add" type="submit">Track</button>
+          </form>
+          <div class="item-list" id="fu-list"></div>
+        </div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer>
+  JARVIS Command Center · data stays in your browser ·
+  <a href="index.html">About Jarvis</a> ·
+  <a href="https://calendly.com/divineteams/discovery" target="_blank" rel="noopener">Free workflow audit</a>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  var STORE_KEY = 'jarvis-command-center-v1';
+
+  function load() {
+    try {
+      var raw = localStorage.getItem(STORE_KEY);
+      if (raw) {
+        var parsed = JSON.parse(raw);
+        if (parsed && Array.isArray(parsed.audits) && Array.isArray(parsed.followups)) return parsed;
+      }
+    } catch (e) { /* corrupted store — start fresh */ }
+    return null;
+  }
+  function save() { localStorage.setItem(STORE_KEY, JSON.stringify(state)); }
+  function uid() { return 'id-' + Math.random().toString(36).slice(2, 10); }
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function demoData() {
+    var d = new Date();
+    function offset(days) {
+      var t = new Date(d.getFullYear(), d.getMonth(), d.getDate() + days);
+      return t.toISOString().slice(0, 10);
+    }
+    return {
+      audits: [
+        { id: uid(), name: 'Answer scheduling emails', mins: 15, times: 10, status: 'live' },
+        { id: uid(), name: 'Send invoices & chase payments', mins: 30, times: 4, status: 'building' },
+        { id: uid(), name: 'Weekly client reporting', mins: 90, times: 2, status: 'identified' },
+        { id: uid(), name: 'CRM data entry after calls', mins: 20, times: 8, status: 'identified' },
+        { id: uid(), name: 'Social post scheduling', mins: 25, times: 5, status: 'live' }
+      ],
+      followups: [
+        { id: uid(), who: 'Sarah @ Acme', about: 'Proposal follow-up', due: offset(-2), done: false },
+        { id: uid(), who: 'Dev @ LaunchKit', about: 'Pilot kickoff call', due: offset(0), done: false },
+        { id: uid(), who: 'Mia @ CreatorCo', about: 'Sponsorship terms', due: offset(3), done: false },
+        { id: uid(), who: 'Tom @ ScaleOps', about: 'Invoice #204', due: offset(-1), done: true }
+      ]
+    };
+  }
+
+  var state = load() || demoData();
+
+  // ---------- Derived metrics ----------
+  function hoursPerWeek(a) { return (a.mins * a.times) / 60; }
+  function totals() {
+    var lost = 0, reclaimed = 0;
+    state.audits.forEach(function (a) {
+      if (a.status === 'live') reclaimed += hoursPerWeek(a);
+      else lost += hoursPerWeek(a);
+    });
+    var total = lost + reclaimed;
+    return {
+      lost: lost, reclaimed: reclaimed,
+      leverage: total > 0 ? Math.round((reclaimed / total) * 100) : 0
+    };
+  }
+  function fuStatus(f) {
+    if (f.done) return 'done';
+    var today = new Date(); today.setHours(0, 0, 0, 0);
+    var due = new Date(f.due + 'T00:00:00');
+    if (due < today) return 'overdue';
+    if (due.getTime() === today.getTime()) return 'today';
+    return 'upcoming';
+  }
+
+  // ---------- Rendering ----------
+  function fmtHrs(h) { return (Math.round(h * 10) / 10).toString(); }
+
+  function renderStats() {
+    var t = totals();
+    document.getElementById('stat-lost').textContent = fmtHrs(t.lost);
+    document.getElementById('stat-reclaimed').textContent = fmtHrs(t.reclaimed);
+    document.getElementById('stat-leverage').textContent = t.leverage + '%';
+
+    var open = state.followups.filter(function (f) { return !f.done; });
+    var overdue = open.filter(function (f) { return fuStatus(f) === 'overdue'; });
+    document.getElementById('stat-followups').textContent = open.length;
+    document.getElementById('stat-followups-note').textContent = overdue.length > 0
+      ? overdue.length + ' overdue — act now'
+      : 'Nothing slips through';
+  }
+
+  function renderInsight() {
+    var el = document.getElementById('jarvis-insight');
+    var open = state.followups.filter(function (f) { return !f.done; });
+    var overdue = open.filter(function (f) { return fuStatus(f) === 'overdue'; });
+    var manual = state.audits.filter(function (a) { return a.status !== 'live'; })
+      .sort(function (a, b) { return hoursPerWeek(b) - hoursPerWeek(a); });
+    var t = totals();
+
+    if (overdue.length > 0) {
+      el.innerHTML = 'You have <strong>' + overdue.length + ' overdue follow-up' + (overdue.length > 1 ? 's' : '') +
+        '</strong>. Start with <strong>' + esc(overdue[0].who) + '</strong> (' + esc(overdue[0].about) +
+        ') — missed follow-ups are revenue you already earned.';
+    } else if (manual.length > 0) {
+      el.innerHTML = 'Your biggest time-sink is <strong>' + esc(manual[0].name) + '</strong> at <strong>' +
+        fmtHrs(hoursPerWeek(manual[0])) + ' hrs/week</strong>. Automate it next to push your leverage past ' +
+        t.leverage + '%.';
+    } else if (state.audits.length === 0) {
+      el.innerHTML = 'Start your <strong>workflow audit</strong>: add every recurring task you touch this week, and I\'ll show you where the hours are leaking.';
+    } else {
+      el.innerHTML = 'All tracked workflows are automated and no follow-ups are pending. <strong>' +
+        fmtHrs(t.reclaimed) + ' hrs/week reclaimed.</strong> Go build something.';
+    }
+  }
+
+  function renderAudits() {
+    var list = document.getElementById('audit-list');
+    var manual = state.audits.filter(function (a) { return a.status !== 'live'; });
+    document.getElementById('audit-count').textContent = state.audits.length + ' task' + (state.audits.length === 1 ? '' : 's');
+
+    if (state.audits.length === 0) {
+      list.innerHTML = '<div class="empty"><strong>No tasks audited yet.</strong><br/>Add every recurring task you do manually — minutes each, times per week.</div>';
+      return;
+    }
+    var sorted = state.audits.slice().sort(function (a, b) { return hoursPerWeek(b) - hoursPerWeek(a); });
+    var maxH = hoursPerWeek(sorted[0]) || 1;
+    var topManualId = manual.length > 0
+      ? manual.sort(function (a, b) { return hoursPerWeek(b) - hoursPerWeek(a); })[0].id
+      : null;
+
+    list.innerHTML = sorted.map(function (a) {
+      var h = hoursPerWeek(a);
+      var isTop = a.id === topManualId;
+      return '<div class="item' + (isTop ? ' top-candidate' : '') + '">' +
+        '<div class="i-main">' +
+          '<div class="i-title">' + esc(a.name) + (isTop ? ' <span class="tag tag-today">Automate next</span>' : '') + '</div>' +
+          '<div class="i-sub">' + a.mins + ' min × ' + a.times + '/wk</div>' +
+          '<div class="audit-bar-wrap"><div class="audit-bar" style="width:' + Math.max(6, Math.round((h / maxH) * 100)) + '%"></div></div>' +
+        '</div>' +
+        '<div class="i-metric">' + fmtHrs(h) + ' h/wk</div>' +
+        '<button class="icon-btn" data-del-audit="' + a.id + '" title="Remove">✕</button>' +
+      '</div>';
+    }).join('');
+  }
+
+  var STATUS_FLOW = { identified: 'building', building: 'live', live: 'identified' };
+  var STATUS_LABEL = { identified: 'Identified', building: 'Building', live: 'Live' };
+  var STATUS_NEXT_LABEL = { identified: 'Start building', building: 'Mark live', live: 'Back to identified' };
+
+  function renderPipeline() {
+    var list = document.getElementById('pipeline-list');
+    var liveCount = state.audits.filter(function (a) { return a.status === 'live'; }).length;
+    document.getElementById('pipeline-count').textContent = liveCount + ' live';
+
+    if (state.audits.length === 0) {
+      list.innerHTML = '<div class="empty">Audited tasks appear here. Move each one <strong>Identified → Building → Live</strong> as Jarvis takes it over.</div>';
+      return;
+    }
+    var order = { building: 0, identified: 1, live: 2 };
+    var sorted = state.audits.slice().sort(function (a, b) {
+      return (order[a.status] - order[b.status]) || (hoursPerWeek(b) - hoursPerWeek(a));
+    });
+    list.innerHTML = sorted.map(function (a) {
+      return '<div class="item">' +
+        '<span class="tag tag-' + a.status + '">' + STATUS_LABEL[a.status] + '</span>' +
+        '<div class="i-main">' +
+          '<div class="i-title">' + esc(a.name) + '</div>' +
+          '<div class="i-sub">' + (a.status === 'live' ? 'Saving ' : 'Worth ') + fmtHrs(hoursPerWeek(a)) + ' hrs/week</div>' +
+        '</div>' +
+        '<button class="icon-btn act" data-advance="' + a.id + '" title="' + STATUS_NEXT_LABEL[a.status] + '">' +
+          (a.status === 'live' ? '↺' : '→') + '</button>' +
+      '</div>';
+    }).join('');
+  }
+
+  function renderFollowups() {
+    var list = document.getElementById('fu-list');
+    var open = state.followups.filter(function (f) { return !f.done; });
+    document.getElementById('fu-count').textContent = open.length + ' open';
+
+    if (state.followups.length === 0) {
+      list.innerHTML = '<div class="empty"><strong>No follow-ups tracked.</strong><br/>Every lead, proposal, and invoice you\'re waiting on goes here — so nothing gets missed.</div>';
+      return;
+    }
+    var rank = { overdue: 0, today: 1, upcoming: 2, done: 3 };
+    var sorted = state.followups.slice().sort(function (a, b) {
+      var s = rank[fuStatus(a)] - rank[fuStatus(b)];
+      return s !== 0 ? s : (a.due < b.due ? -1 : 1);
+    });
+    var labels = { overdue: 'Overdue', today: 'Due today', upcoming: 'Upcoming', done: 'Done' };
+    list.innerHTML = sorted.map(function (f) {
+      var s = fuStatus(f);
+      return '<div class="item' + (s === 'overdue' ? ' overdue' : '') + '">' +
+        '<span class="tag tag-' + s + '">' + labels[s] + '</span>' +
+        '<div class="i-main">' +
+          '<div class="i-title">' + esc(f.who) + '</div>' +
+          '<div class="i-sub">' + esc(f.about) + ' · due ' + f.due + '</div>' +
+        '</div>' +
+        (f.done
+          ? '<button class="icon-btn" data-del-fu="' + f.id + '" title="Remove">✕</button>'
+          : '<button class="icon-btn act" data-done-fu="' + f.id + '" title="Mark done">✓</button>' +
+            '<button class="icon-btn" data-del-fu="' + f.id + '" title="Remove">✕</button>') +
+      '</div>';
+    }).join('');
+  }
+
+  function renderAll() {
+    renderStats();
+    renderInsight();
+    renderAudits();
+    renderPipeline();
+    renderFollowups();
+    save();
+  }
+
+  // ---------- Events ----------
+  document.getElementById('audit-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var name = document.getElementById('audit-name').value.trim();
+    var mins = parseInt(document.getElementById('audit-mins').value, 10);
+    var times = parseInt(document.getElementById('audit-times').value, 10);
+    if (!name || !(mins > 0) || !(times > 0)) return;
+    state.audits.push({ id: uid(), name: name, mins: mins, times: times, status: 'identified' });
+    e.target.reset();
+    renderAll();
+  });
+
+  document.getElementById('fu-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var who = document.getElementById('fu-who').value.trim();
+    var about = document.getElementById('fu-about').value.trim();
+    var due = document.getElementById('fu-date').value;
+    if (!who || !about || !due) return;
+    state.followups.push({ id: uid(), who: who, about: about, due: due, done: false });
+    e.target.reset();
+    renderAll();
+  });
+
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('button');
+    if (!btn) return;
+    var id;
+    if ((id = btn.getAttribute('data-del-audit'))) {
+      state.audits = state.audits.filter(function (a) { return a.id !== id; });
+      renderAll();
+    } else if ((id = btn.getAttribute('data-advance'))) {
+      var a = state.audits.find(function (x) { return x.id === id; });
+      if (a) { a.status = STATUS_FLOW[a.status]; renderAll(); }
+    } else if ((id = btn.getAttribute('data-done-fu'))) {
+      var f = state.followups.find(function (x) { return x.id === id; });
+      if (f) { f.done = true; renderAll(); }
+    } else if ((id = btn.getAttribute('data-del-fu'))) {
+      state.followups = state.followups.filter(function (x) { return x.id !== id; });
+      renderAll();
+    }
+  });
+
+  document.getElementById('btn-demo').addEventListener('click', function () {
+    state = demoData();
+    renderAll();
+  });
+  document.getElementById('btn-reset').addEventListener('click', function () {
+    if (confirm('Clear all Command Center data?')) {
+      state = { audits: [], followups: [] };
+      renderAll();
+    }
+  });
+
+  renderAll();
+})();
+</script>
+</body>
+</html>

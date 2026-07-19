@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Jarvis — Your AI Operations Assistant for Founders</title>
+<meta name="description" content="Jarvis gives solo founders their time back. We audit your workflows free, automate one task to prove it, then build your full Jarvis Command Center."/>
+<meta property="og:title" content="Jarvis — Your AI Operations Assistant"/>
+<meta property="og:description" content="Target founders with demand — and an operations problem. Free workflow audit → automate one task → full Jarvis setup."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #060a14;
+    --bg-2: #0b1120;
+    --card: #101a30;
+    --line: rgba(94, 234, 212, 0.12);
+    --cyan: #22d3ee;
+    --teal: #5eead4;
+    --gold: #fbbf24;
+    --pink: #f472b6;
+    --text: #e6edf7;
+    --muted: #94a3b8;
+    --r: 18px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- Nav ---------- */
+  nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(6, 10, 20, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; max-width: 1100px; margin: 0 auto; }
+  .logo { font-weight: 900; font-size: 1.2rem; letter-spacing: 0.02em; display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); }
+  .logo-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 12px var(--cyan); animation: pulse 2.4s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
+  .nav-links { display: flex; gap: 24px; align-items: center; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.92rem; font-weight: 500; }
+  .nav-links a:hover { color: var(--text); }
+  .btn {
+    display: inline-block; padding: 13px 28px; border-radius: 12px;
+    font-weight: 700; font-size: 0.98rem; text-decoration: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    border: none; cursor: pointer;
+  }
+  .btn-primary { background: linear-gradient(135deg, var(--cyan), var(--teal)); color: #04141a; box-shadow: 0 4px 24px rgba(34, 211, 238, 0.35); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(34, 211, 238, 0.5); }
+  .btn-ghost { border: 1px solid rgba(148, 163, 184, 0.35); color: var(--text); }
+  .btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); }
+  .nav-links .btn { padding: 9px 18px; font-size: 0.88rem; }
+
+  /* ---------- Hero ---------- */
+  .hero { position: relative; padding: 96px 0 80px; overflow: hidden; text-align: center; }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+      radial-gradient(600px 300px at 50% -10%, rgba(34, 211, 238, 0.18), transparent 70%),
+      radial-gradient(500px 260px at 85% 20%, rgba(244, 114, 182, 0.08), transparent 70%);
+    pointer-events: none;
+  }
+  .badge {
+    display: inline-block; padding: 7px 18px; border-radius: 50px;
+    border: 1px solid var(--line); background: rgba(34, 211, 238, 0.08);
+    color: var(--teal); font-size: 0.82rem; font-weight: 600; letter-spacing: 0.06em;
+    text-transform: uppercase; margin-bottom: 24px;
+  }
+  h1 { font-size: clamp(2.4rem, 5.5vw, 4rem); font-weight: 900; line-height: 1.08; letter-spacing: -0.02em; margin-bottom: 22px; }
+  h1 .glow { background: linear-gradient(90deg, var(--cyan), var(--teal)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero p.sub { font-size: 1.2rem; color: var(--muted); max-width: 640px; margin: 0 auto 36px; }
+  .hero-ctas { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .hero-note { margin-top: 18px; font-size: 0.85rem; color: var(--muted); }
+
+  /* ---------- Sections ---------- */
+  section { padding: 80px 0; position: relative; }
+  .section-kicker { color: var(--cyan); font-weight: 700; font-size: 0.85rem; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; }
+  h2 { font-size: clamp(1.7rem, 3.5vw, 2.4rem); font-weight: 800; letter-spacing: -0.01em; margin-bottom: 14px; }
+  .section-sub { color: var(--muted); max-width: 620px; margin-bottom: 44px; font-size: 1.05rem; }
+  .center { text-align: center; }
+  .center .section-sub { margin-left: auto; margin-right: auto; }
+
+  .grid { display: grid; gap: 20px; }
+  .grid-4 { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+  .grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: var(--r);
+    padding: 28px; transition: transform 0.15s ease, border-color 0.15s ease;
+  }
+  .card:hover { transform: translateY(-3px); border-color: rgba(34, 211, 238, 0.35); }
+  .card .icon { font-size: 1.8rem; margin-bottom: 14px; display: block; }
+  .card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
+  .card p { color: var(--muted); font-size: 0.94rem; }
+
+  /* ---------- Signals ---------- */
+  .signals { background: var(--bg-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .signal-row {
+    display: flex; align-items: center; gap: 16px; padding: 16px 22px;
+    background: var(--card); border: 1px solid var(--line); border-radius: 14px; margin-bottom: 12px;
+  }
+  .signal-row .s-icon { font-size: 1.3rem; }
+  .signal-row .s-label { font-weight: 600; flex: 1; }
+  .signal-row .s-trend { font-weight: 800; color: var(--teal); font-size: 0.85rem; letter-spacing: 0.04em; }
+  .signal-row.down .s-trend { color: var(--pink); }
+
+  /* ---------- Why they buy ---------- */
+  .pain-list { list-style: none; display: grid; gap: 14px; }
+  .pain-list li {
+    display: flex; gap: 14px; align-items: flex-start;
+    background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px;
+  }
+  .pain-list .p-mark { color: var(--pink); font-weight: 900; font-size: 1.1rem; line-height: 1.5; }
+  .pain-list strong { display: block; margin-bottom: 2px; }
+  .pain-list span.detail { color: var(--muted); font-size: 0.92rem; }
+
+  /* ---------- Offer ladder ---------- */
+  .ladder { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); counter-reset: step; }
+  .step {
+    position: relative; background: var(--card); border: 1px solid var(--line);
+    border-radius: var(--r); padding: 32px 26px 28px;
+  }
+  .step::before {
+    counter-increment: step; content: counter(step);
+    position: absolute; top: -16px; left: 24px;
+    width: 34px; height: 34px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--cyan), var(--teal)); color: #04141a;
+    font-weight: 900; display: flex; align-items: center; justify-content: center;
+  }
+  .step.featured { border-color: rgba(251, 191, 36, 0.5); background: linear-gradient(180deg, rgba(251, 191, 36, 0.06), var(--card)); }
+  .step .price { font-weight: 800; color: var(--gold); font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px; }
+  .step h3 { font-size: 1.25rem; font-weight: 800; margin-bottom: 10px; }
+  .step p { color: var(--muted); font-size: 0.94rem; margin-bottom: 16px; }
+  .step ul { list-style: none; display: grid; gap: 8px; }
+  .step ul li { font-size: 0.9rem; color: var(--text); padding-left: 24px; position: relative; }
+  .step ul li::before { content: '✓'; position: absolute; left: 0; color: var(--teal); font-weight: 800; }
+
+  /* ---------- Outcome band ---------- */
+  .outcomes { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 40px; }
+  .outcome-pill {
+    display: flex; align-items: center; gap: 10px; padding: 14px 26px;
+    border: 1px solid var(--line); border-radius: 50px; background: var(--card); font-weight: 700;
+  }
+  .outcome-pill .o-icon { font-size: 1.2rem; }
+
+  /* ---------- CTA ---------- */
+  .cta-final {
+    background:
+      radial-gradient(500px 260px at 50% 0%, rgba(34, 211, 238, 0.15), transparent 70%),
+      var(--bg-2);
+    border-top: 1px solid var(--line); text-align: center;
+  }
+  .cta-final h2 { margin-bottom: 12px; }
+  .cta-final .section-sub { margin: 0 auto 32px; }
+
+  footer { padding: 36px 0; text-align: center; color: var(--muted); font-size: 0.85rem; border-top: 1px solid var(--line); }
+  footer a { color: var(--teal); text-decoration: none; }
+
+  @media (max-width: 640px) {
+    .nav-links a:not(.btn) { display: none; }
+    section { padding: 60px 0; }
+    .hero { padding: 64px 0 56px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="#"><span class="logo-dot"></span>JARVIS</a>
+    <div class="nav-links">
+      <a href="#who">Who it's for</a>
+      <a href="#why">Why Jarvis</a>
+      <a href="#offer">The offer</a>
+      <a href="command-center.html">Command Center</a>
+      <a class="btn btn-primary" href="https://calendly.com/divineteams/discovery" target="_blank" rel="noopener">Free Workflow Audit</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <div class="badge">AI Operations Assistant</div>
+    <h1>You built the demand.<br/>Jarvis runs the <span class="glow">operations.</span></h1>
+    <p class="sub">Admin is stealing your week and follow-ups are slipping through the cracks — but you're not ready to hire a team. Jarvis automates your operations so you get your time back.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-primary" href="https://calendly.com/divineteams/discovery" target="_blank" rel="noopener">Get Your Free Workflow Audit →</a>
+      <a class="btn btn-ghost" href="command-center.html">See the Command Center</a>
+    </div>
+    <p class="hero-note">No commitment. We map your workflows and show you exactly where the hours are leaking.</p>
+  </div>
+</header>
+
+<section id="who">
+  <div class="container center">
+    <div class="section-kicker">01 · Who it's for</div>
+    <h2>Built for founders with demand — and an operations problem</h2>
+    <p class="section-sub">If customers are showing up but your calendar is drowning in admin, Jarvis was built for you.</p>
+    <div class="grid grid-4">
+      <div class="card"><span class="icon">🚀</span><h3>Solo SaaS Founders</h3><p>Shipping product by day, buried in onboarding emails and support tickets by night.</p></div>
+      <div class="card"><span class="icon">🎥</span><h3>Creator Founders</h3><p>Your audience grows faster than your ability to answer DMs, manage sponsors, and publish.</p></div>
+      <div class="card"><span class="icon">📣</span><h3>Agency Owners</h3><p>Client delivery is strong — but proposals, reporting, and invoicing eat your margins.</p></div>
+      <div class="card"><span class="icon">🧭</span><h3>Coaches &amp; Consultants</h3><p>Every hour on scheduling and follow-up is an hour you can't bill or coach.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="signals" id="signals">
+  <div class="container">
+    <div class="grid grid-2" style="align-items: center; gap: 48px;">
+      <div>
+        <div class="section-kicker">02 · Buying signals</div>
+        <h2>Sound familiar?</h2>
+        <p class="section-sub" style="margin-bottom: 24px;">These are the signals we see right before a founder hits the operations wall. Two or more of these, and automation pays for itself in weeks.</p>
+        <a class="btn btn-ghost" href="https://calendly.com/divineteams/discovery" target="_blank" rel="noopener">Check where you stand →</a>
+      </div>
+      <div>
+        <div class="signal-row"><span class="s-icon">👥</span><span class="s-label">Team of 1–5, doing everything yourself</span><span class="s-trend">▲ RISING</span></div>
+        <div class="signal-row"><span class="s-icon">🚀</span><span class="s-label">Recently launched, demand is real</span><span class="s-trend">▲ RISING</span></div>
+        <div class="signal-row"><span class="s-icon">🧑‍💻</span><span class="s-label">Hiring a VA or ops help</span><span class="s-trend">▲ RISING</span></div>
+        <div class="signal-row down"><span class="s-icon">🧩</span><span class="s-label">Too many tools, none of them talk</span><span class="s-trend">▼ LEAKING</span></div>
+        <div class="signal-row down"><span class="s-icon">⏰</span><span class="s-label">Falling behind on follow-ups and admin</span><span class="s-trend">▼ LEAKING</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="container">
+    <div class="grid grid-2" style="align-items: center; gap: 48px;">
+      <div>
+        <div class="section-kicker">03 · Why founders buy</div>
+        <h2>The problem isn't demand. It's the admin between you and the demand.</h2>
+        <p class="section-sub" style="margin-bottom: 0;">You don't need more leads. You need the hours back that operations is quietly stealing.</p>
+      </div>
+      <ul class="pain-list">
+        <li><span class="p-mark">✕</span><div><strong>Demand already exists</strong><span class="detail">Customers are coming in — the bottleneck is you keeping up with them.</span></div></li>
+        <li><span class="p-mark">✕</span><div><strong>Admin steals your time</strong><span class="detail">Scheduling, invoicing, data entry, reporting — 15+ hours a week that build nothing.</span></div></li>
+        <li><span class="p-mark">✕</span><div><strong>Follow-ups get missed</strong><span class="detail">Every dropped follow-up is revenue you already earned, walking out the door.</span></div></li>
+        <li><span class="p-mark">✕</span><div><strong>Not ready to hire a team</strong><span class="detail">Payroll before process is expensive. Automation gives you leverage without headcount.</span></div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="signals" id="offer">
+  <div class="container center">
+    <div class="section-kicker">04 · The offer</div>
+    <h2>Start free. Prove it fast. Scale when it works.</h2>
+    <p class="section-sub">No big commitment up front — Jarvis earns every step of your trust.</p>
+    <div class="ladder" style="margin-top: 36px; text-align: left;">
+      <div class="step">
+        <div class="price">Free</div>
+        <h3>Workflow Audit</h3>
+        <p>A 30-minute deep dive into how you actually spend your week.</p>
+        <ul>
+          <li>Map every recurring task you touch</li>
+          <li>Quantify hours lost per week</li>
+          <li>Ranked automation opportunity list</li>
+        </ul>
+      </div>
+      <div class="step">
+        <div class="price">Pilot</div>
+        <h3>Automate One Task</h3>
+        <p>We take your single worst time-sink and make it disappear.</p>
+        <ul>
+          <li>One high-impact workflow, fully automated</li>
+          <li>Live in days, not months</li>
+          <li>Measurable hours back — before you commit further</li>
+        </ul>
+      </div>
+      <div class="step featured">
+        <div class="price">Full Setup</div>
+        <h3>Full Jarvis Setup</h3>
+        <p>Your complete AI operations layer, running around the clock.</p>
+        <ul>
+          <li>Jarvis Command Center dashboard</li>
+          <li>Follow-up engine — nothing slips again</li>
+          <li>Automated scheduling, reporting &amp; CRM flows</li>
+          <li>Ongoing optimization every month</li>
+        </ul>
+      </div>
+    </div>
+    <div class="outcomes">
+      <div class="outcome-pill"><span class="o-icon">⏱</span> Time back</div>
+      <div class="outcome-pill"><span class="o-icon">📈</span> Operating leverage</div>
+      <div class="outcome-pill"><span class="o-icon">🤖</span> A system that never forgets</div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-final">
+  <div class="container">
+    <h2>Target: founders with demand — and an operations problem.</h2>
+    <p class="section-sub">That's you? Then the audit is free and the first automation will pay for itself. Book a slot and bring your messiest week.</p>
+    <a class="btn btn-primary" href="https://calendly.com/divineteams/discovery" target="_blank" rel="noopener">Book Your Free Workflow Audit →</a>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>JARVIS · An AI Prosperity Project system · <a href="command-center.html">Open the Command Center</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
