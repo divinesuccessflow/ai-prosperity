@@ -271,6 +271,22 @@ select.sel{cursor:pointer}
         <span class="rec-dot"></span><span>REC</span><span id="recTime">0:00</span>
         <button id="recStopBtn">Stop</button>
       </div>
+      <div class="record-row">
+        <button class="rec-btn" id="musicBtn" style="flex:1">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+          Add background music
+        </button>
+      </div>
+      <input type="file" id="musicInput" accept="audio/*" hidden/>
+      <div id="musicCard" class="media-card" style="margin:0 10px 6px;display:none">
+        <div class="media-meta">
+          <div class="media-name" id="musicName">—</div>
+          <div class="field" style="margin:8px 0 4px"><label>Music volume <span class="val" id="musicVolVal">35%</span></label>
+            <input type="range" id="musicVol" min="0" max="1" step="0.05" value="0.35"/></div>
+          <div class="switch-row" style="margin-bottom:6px;font-size:11.5px"><span>Auto-duck under speech</span><div class="toggle on" id="duckToggle"></div></div>
+          <button class="mini-btn" id="musicRemove" style="width:100%">Remove music</button>
+        </div>
+      </div>
       <div class="media-list" id="mediaList"></div>
     </div>
 
@@ -318,10 +334,10 @@ select.sel{cursor:pointer}
       <div class="tab-body active" id="tab-ai">
         <div class="chat-log" id="chatLog"></div>
         <div class="chat-chips" id="chatChips">
-          <button class="chat-chip">Remove all the pauses</button>
+          <button class="chat-chip">Remove pauses &amp; umms</button>
+          <button class="chat-chip">Generate captions</button>
           <button class="chat-chip">Make it cinematic</button>
           <button class="chat-chip">Turn this into a Short</button>
-          <button class="chat-chip">Add a hook text</button>
         </div>
         <div class="chat-input-row">
           <input id="chatInput" placeholder="Tell the editor what to do…" autocomplete="off"/>
@@ -347,6 +363,12 @@ select.sel{cursor:pointer}
         <div id="colorControls">
           <div class="section-title">Looks</div>
           <div class="presets" id="presetGrid"></div>
+          <div class="section-title">Effects</div>
+          <div class="presets" id="effectGrid"></div>
+          <div class="field" id="fxAmountField" style="display:none">
+            <label>Effect intensity <span class="val" id="fxAmtVal">0.60</span></label>
+            <input type="range" id="fxAmount" min="0.1" max="1" step="0.05" value="0.6"/>
+          </div>
           <div class="section-title">Adjust</div>
           <div id="gradeSliders"></div>
           <div class="row2" style="margin-top:16px">
@@ -409,6 +431,30 @@ select.sel{cursor:pointer}
           </div>
           <p class="hint" style="margin-top:12px">Drag the text directly on the preview to position it.</p>
         </div>
+        <div class="section-title" style="margin-top:18px">Auto captions (AI)</div>
+        <div class="hint" style="margin-bottom:10px">Transcribes speech <b>locally in your browser</b> (nothing is uploaded) and burns styled captions into the video.</div>
+        <button class="btn primary" id="genCapsBtn" style="width:100%;justify-content:center">Generate captions</button>
+        <div id="capControls" style="display:none;margin-top:12px">
+          <div class="field"><label>Caption style</label>
+            <select class="sel" id="capStyle">
+              <option value="karaoke">Karaoke — words light up</option>
+              <option value="pop">Word pop — active word scales</option>
+              <option value="classic">Classic — boxed lines</option>
+            </select>
+          </div>
+          <div class="field"><label>Size <span class="val" id="capSizeVal">52</span></label><input type="range" id="capSize" min="28" max="90" step="2" value="52"/></div>
+          <div class="field"><label>Highlight color</label>
+            <select class="sel" id="capAccent">
+              <option value="#ffe14d">Yellow</option><option value="#38d9f5">Cyan</option>
+              <option value="#7cff8f">Green</option><option value="#ff5c7a">Pink</option><option value="#ffffff">White</option>
+            </select>
+          </div>
+          <div class="row2">
+            <button class="btn" id="fillerBtn">✂ Cut filler words</button>
+            <button class="btn ghost" id="clearCapsBtn">Clear</button>
+          </div>
+        </div>
+        <p id="capStatus" style="margin-top:10px;color:var(--muted);font-size:11.5px;line-height:1.5"></p>
         <div class="section-title" style="margin-top:18px">Overlays</div>
         <div id="textList"></div>
       </div>
@@ -426,6 +472,30 @@ select.sel{cursor:pointer}
             </select>
           </div>
           <div class="field"><label>Volume <span class="val" id="volVal">100%</span></label><input type="range" id="volSlider" min="0" max="1.5" step="0.05" value="1"/></div>
+          <div class="field"><label>Speed</label>
+            <select class="sel" id="speedSelect">
+              <option value="0.5">0.5× slow motion</option>
+              <option value="0.75">0.75×</option>
+              <option value="1" selected>1× normal</option>
+              <option value="1.25">1.25×</option>
+              <option value="1.5">1.5×</option>
+              <option value="2">2× fast</option>
+            </select>
+          </div>
+          <div class="section-title">Split screen</div>
+          <div class="field"><label>Layout</label>
+            <select class="sel" id="splitMode">
+              <option value="">None</option>
+              <option value="top">Split — this clip on top</option>
+              <option value="bottom">Split — this clip on bottom</option>
+              <option value="left">Side by side — this clip left</option>
+              <option value="right">Side by side — this clip right</option>
+              <option value="pip">Picture-in-picture corner</option>
+            </select>
+          </div>
+          <div class="field" id="splitSrcField" style="display:none"><label>Second video</label>
+            <select class="sel" id="splitSrc"></select>
+          </div>
           <div class="row2" style="margin-top:14px">
             <button class="btn" id="dupClipBtn">Duplicate</button>
             <button class="btn ghost" id="delClipBtn" style="color:var(--danger)">Delete</button>
@@ -451,6 +521,19 @@ select.sel{cursor:pointer}
         Split
       </button>
       <button class="btn" id="tlDelBtn">Delete</button>
+      <span style="color:var(--muted);font-size:11.5px;margin-left:10px">Transition</span>
+      <select class="sel" id="transSelect" style="width:auto;padding:5px 8px;font-size:11.5px">
+        <option value="none">Cut (none)</option>
+        <option value="crossfade">Crossfade</option>
+        <option value="fade">Fade to black</option>
+        <option value="slide">Slide</option>
+        <option value="zoom">Zoom punch</option>
+      </select>
+      <select class="sel" id="transDur" style="width:auto;padding:5px 8px;font-size:11.5px">
+        <option value="0.3">0.3s</option>
+        <option value="0.5" selected>0.5s</option>
+        <option value="0.8">0.8s</option>
+      </select>
       <span style="color:var(--muted);font-size:11.5px;margin-left:8px" id="tlHint">Drag clips to reorder · drag edges to trim</span>
       <div class="zoom-ctl">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -494,8 +577,8 @@ const ASPECTS = { '16:9':[1920,1080], '9:16':[1080,1920], '1:1':[1080,1080], '4:
 const DEFAULT_GRADE = { exposure:0, contrast:1, saturation:1, temperature:0, tint:0, highlights:0, shadows:0, vignette:0, split:0, preset:'none' };
 
 const state = {
-  sources: [],          // {id,name,url,file,duration,video,thumb,broll,rms:{db,hop}|null}
-  clips: [],            // {id,srcId,in,out,volume,fit,grade}
+  sources: [],          // {id,name,url,file,duration,video,thumb,broll,rms:{db,hop}|null,words:null}
+  clips: [],            // see newClip()
   texts: [],            // {id,text,start,end,style,size,color,bg,x,y}
   aspect: '16:9',
   playhead: 0,
@@ -505,21 +588,28 @@ const state = {
   pxPerSec: 30,
   binFilter: 'all',
   exporting: false,
+  transition: { type:'none', dur:0.5 },
+  captions: { items:[], style:'karaoke', size:52, y:0.84, color:'#ffffff', accent:'#ffe14d', on:false },
+  music: null,          // {name,el,volume,duck,gain}
 };
+function newClip(srcId, inT, outT, tmpl={}){
+  return { id:nid(), srcId, in:inT, out:outT, volume:1, fit:'cover', speed:1,
+           grade:{...DEFAULT_GRADE}, effect:{type:'none', amount:0.6}, overlay:null, ...tmpl };
+}
 let uid = 1; const nid = () => uid++;
 const undoStack = [];
 
 const $ = id => document.getElementById(id);
 const fmtT = s => { s=Math.max(0,s); const m=Math.floor(s/60), sec=(s%60); return `${String(m).padStart(2,'0')}:${sec<10?'0':''}${sec.toFixed(1)}`; };
 const src = c => state.sources.find(s=>s.id===c.srcId);
-const clipDur = c => c.out - c.in;
+const clipDur = c => (c.out - c.in)/(c.speed||1);
 const totalDur = () => state.clips.reduce((a,c)=>a+clipDur(c),0);
 const clipStarts = () => { let t=0; return state.clips.map(c=>{const s=t; t+=clipDur(c); return s;}); };
 function locate(t){
   const starts = clipStarts();
   for(let i=0;i<state.clips.length;i++){
     const c=state.clips[i], len=clipDur(c);
-    if(t < starts[i]+len - 1e-6 || i===state.clips.length-1) return {i, clip:c, local: Math.min(c.out, c.in + Math.max(0,t-starts[i])), start:starts[i]};
+    if(t < starts[i]+len - 1e-6 || i===state.clips.length-1) return {i, clip:c, local: Math.min(c.out, c.in + Math.max(0,t-starts[i])*(c.speed||1)), start:starts[i]};
   }
   return null;
 }
@@ -570,8 +660,32 @@ function initGL(){
     void main(){ vUV = vec2((p.x+1.0)*0.5, 1.0-(p.y+1.0)*0.5); gl_Position = vec4(p*uScale,0.,1.); }`;
   const fs = `precision mediump float; varying vec2 vUV; uniform sampler2D uTex;
     uniform float uExp,uCon,uSat,uTemp,uTint,uHi,uSh,uVig,uSplit;
+    uniform float uEffect,uFx,uTime;
+    float rnd(vec2 p){ return fract(sin(dot(p, vec2(12.9898,78.233)))*43758.5453); }
     void main(){
-      vec3 c = texture2D(uTex, vUV).rgb;
+      vec2 uv = vUV;
+      // --- geometric effects (pre-sample) ---
+      if(uEffect == 5.0){ // pixelate
+        float px = mix(240.0, 40.0, uFx);
+        uv = floor(uv*px)/px + 0.5/px;
+      } else if(uEffect == 6.0){ // fisheye
+        vec2 d = uv - 0.5;
+        float r = length(d);
+        uv = 0.5 + d * (1.0 - uFx*0.45*r*r*2.2);
+      } else if(uEffect == 3.0){ // glitch: banded horizontal displacement
+        float band = floor(uv.y*24.0);
+        float t = floor(uTime*12.0);
+        float g = rnd(vec2(band, t));
+        if(g > 1.0 - uFx*0.35) uv.x = fract(uv.x + (rnd(vec2(t, band))-0.5)*0.12);
+      }
+      vec3 c;
+      if(uEffect == 2.0){ // vhs: chromatic split
+        float off = uFx*0.006;
+        c = vec3(texture2D(uTex, uv+vec2(off,0.)).r, texture2D(uTex, uv).g, texture2D(uTex, uv-vec2(off,0.)).b);
+      } else {
+        c = texture2D(uTex, uv).rgb;
+      }
+      // --- grade ---
       c *= exp2(uExp);
       c.r *= 1.0 + 0.28*uTemp; c.b *= 1.0 - 0.28*uTemp; c.g *= 1.0 + 0.14*uTint;
       float l = dot(c, vec3(0.299,0.587,0.114));
@@ -583,6 +697,18 @@ function initGL(){
       c += uSplit * 0.28 * ( l*vec3(0.42,0.10,-0.20) + (1.0-l)*vec3(-0.18,0.03,0.24) );
       float d = distance(vUV, vec2(0.5));
       c *= 1.0 - uVig * smoothstep(0.35, 0.85, d);
+      // --- post effects ---
+      if(uEffect == 1.0){ // film grain
+        c += (rnd(vUV*vec2(1920.0,1080.0) + fract(uTime)*7.13) - 0.5) * 0.22 * uFx;
+      } else if(uEffect == 2.0){ // vhs: scanlines + noise + desat edges
+        c *= 1.0 - uFx*0.25*step(0.5, fract(vUV.y*270.0));
+        c += (rnd(vUV*913.0 + fract(uTime)*3.7)-0.5)*0.1*uFx;
+      } else if(uEffect == 4.0){ // dreamy glow: soft bloom approximation
+        vec3 b = texture2D(uTex, uv+vec2(0.004,0.004)).rgb + texture2D(uTex, uv-vec2(0.004,0.004)).rgb
+               + texture2D(uTex, uv+vec2(-0.004,0.004)).rgb + texture2D(uTex, uv+vec2(0.004,-0.004)).rgb;
+        c = mix(c, 1.0-(1.0-c)*(1.0-b*0.25), uFx*0.7);
+        c *= 1.0 + uFx*0.06;
+      }
       gl_FragColor = vec4(clamp(c,0.0,1.0), 1.0);
     }`;
   const mk=(t,s)=>{const sh=gl.createShader(t); gl.shaderSource(sh,s); gl.compileShader(sh);
@@ -594,7 +720,7 @@ function initGL(){
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
   const pLoc = gl.getAttribLocation(glProg,'p');
   gl.enableVertexAttribArray(pLoc); gl.vertexAttribPointer(pLoc,2,gl.FLOAT,false,0,0);
-  ['uScale','uExp','uCon','uSat','uTemp','uTint','uHi','uSh','uVig','uSplit'].forEach(n=>uLoc[n]=gl.getUniformLocation(glProg,n));
+  ['uScale','uExp','uCon','uSat','uTemp','uTint','uHi','uSh','uVig','uSplit','uEffect','uFx','uTime'].forEach(n=>uLoc[n]=gl.getUniformLocation(glProg,n));
   glTex = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, glTex);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
@@ -620,31 +746,88 @@ function fitPreview(){
 }
 window.addEventListener('resize', fitPreview);
 
+const EFFECT_IDS = { none:0, grain:1, vhs:2, glitch:3, glow:4, pixelate:5, fisheye:6 };
+const EFFECTS = [
+  {key:'none', name:'None'}, {key:'grain', name:'Film Grain'}, {key:'vhs', name:'VHS'},
+  {key:'glitch', name:'Glitch'}, {key:'glow', name:'Dreamy Glow'}, {key:'pixelate', name:'Pixelate'}, {key:'fisheye', name:'Fisheye'},
+];
+const freezeCanvas = document.createElement('canvas');
+const freezeCtx = freezeCanvas.getContext('2d');
+let transInfo = null; // {t0, type, dur} — active transition window after a cut
+
+function splitRegions(mode, cw, ch){
+  switch(mode){
+    case 'top':    return { main:[0,0,cw,ch/2],      over:[0,ch/2,cw,ch/2] };
+    case 'bottom': return { main:[0,ch/2,cw,ch/2],   over:[0,0,cw,ch/2] };
+    case 'left':   return { main:[0,0,cw/2,ch],      over:[cw/2,0,cw/2,ch] };
+    case 'right':  return { main:[cw/2,0,cw/2,ch],   over:[0,0,cw/2,ch] };
+    case 'pip':    return { main:[0,0,cw,ch],        over:[cw*0.62,ch*0.045,cw*0.34,ch*0.26] };
+    default:       return { main:[0,0,cw,ch],        over:null };
+  }
+}
+function drawVideoRegion(v, grade, fit, effect, rx, ry, rw, rh){
+  if(!v || v.readyState < 2) return;
+  const gy = glCanvas.height - ry - rh; // GL origin is bottom-left
+  gl.viewport(rx, gy, rw, rh);
+  gl.enable(gl.SCISSOR_TEST);
+  gl.scissor(rx, gy, rw, rh);
+  gl.bindTexture(gl.TEXTURE_2D, glTex);
+  try{ gl.texImage2D(gl.TEXTURE_2D,0,gl.RGB,gl.RGB,gl.UNSIGNED_BYTE,v); }catch(e){}
+  const vAR = v.videoWidth/v.videoHeight, rAR = rw/rh;
+  let sx=1, sy=1;
+  if(fit==='cover'){ if(vAR>rAR) sx=vAR/rAR; else sy=rAR/vAR; }
+  else { if(vAR>rAR) sy=rAR/vAR; else sx=vAR/rAR; }
+  gl.uniform2f(uLoc.uScale, sx, sy);
+  gl.uniform1f(uLoc.uExp,grade.exposure); gl.uniform1f(uLoc.uCon,grade.contrast);
+  gl.uniform1f(uLoc.uSat,grade.saturation); gl.uniform1f(uLoc.uTemp,grade.temperature);
+  gl.uniform1f(uLoc.uTint,grade.tint); gl.uniform1f(uLoc.uHi,grade.highlights);
+  gl.uniform1f(uLoc.uSh,grade.shadows); gl.uniform1f(uLoc.uVig,grade.vignette);
+  gl.uniform1f(uLoc.uSplit,grade.split||0);
+  gl.uniform1f(uLoc.uEffect, EFFECT_IDS[effect?.type] || 0);
+  gl.uniform1f(uLoc.uFx, effect?.amount ?? 0.5);
+  gl.uniform1f(uLoc.uTime, performance.now()/1000 % 1000);
+  gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
+  gl.disable(gl.SCISSOR_TEST);
+}
+function startTransition(newStart){
+  if(!state.transition || state.transition.type==='none') { transInfo=null; return; }
+  const [cw,ch] = ASPECTS[state.aspect];
+  freezeCanvas.width = cw; freezeCanvas.height = ch;
+  freezeCtx.drawImage(glCanvas, 0, 0);
+  transInfo = { t0:newStart, type:state.transition.type, dur:state.transition.dur };
+}
+function applyTransition2D(){
+  if(!transInfo) return;
+  if(!state.playing && !state.exporting){ transInfo = null; return; }
+  const p = (state.playhead - transInfo.t0) / transInfo.dur;
+  if(p < 0 || p >= 1){ transInfo = null; return; }
+  const [cw,ch] = ASPECTS[state.aspect];
+  const type = transInfo.type;
+  if(type==='crossfade'){ ctx2d.globalAlpha = 1-p; ctx2d.drawImage(freezeCanvas,0,0,cw,ch); ctx2d.globalAlpha = 1; }
+  else if(type==='fade'){ ctx2d.fillStyle = `rgba(0,0,0,${(1-p).toFixed(3)})`; ctx2d.fillRect(0,0,cw,ch); }
+  else if(type==='slide'){ ctx2d.drawImage(freezeCanvas, -p*cw, 0, cw, ch); }
+  else if(type==='zoom'){ const s = 1 + 0.28*(1-p); ctx2d.drawImage(glCanvas, (cw-cw*s)/2, (ch-ch*s)/2, cw*s, ch*s); }
+}
 function drawFrame(){
   const [cw,ch] = ASPECTS[state.aspect];
   ctx2d.fillStyle='#000'; ctx2d.fillRect(0,0,cw,ch);
   const loc = state.clips.length ? locate(state.playhead) : null;
   if(loc){
+    gl.viewport(0,0,glCanvas.width,glCanvas.height);
+    gl.clearColor(0,0,0,1); gl.clear(gl.COLOR_BUFFER_BIT);
     const s = src(loc.clip), v = s.video;
-    if(v.readyState >= 2){
-      const g = loc.clip.grade;
-      gl.clearColor(0,0,0,1); gl.clear(gl.COLOR_BUFFER_BIT);
-      gl.bindTexture(gl.TEXTURE_2D, glTex);
-      try{ gl.texImage2D(gl.TEXTURE_2D,0,gl.RGB,gl.RGB,gl.UNSIGNED_BYTE,v); }catch(e){}
-      const vAR = v.videoWidth/v.videoHeight, cAR = cw/ch;
-      let sx=1, sy=1;
-      if(loc.clip.fit==='cover'){ if(vAR>cAR) sx=vAR/cAR; else sy=cAR/vAR; }
-      else { if(vAR>cAR) sy=cAR/vAR; else sx=vAR/cAR; }
-      gl.uniform2f(uLoc.uScale, sx, sy);
-      gl.uniform1f(uLoc.uExp,g.exposure); gl.uniform1f(uLoc.uCon,g.contrast);
-      gl.uniform1f(uLoc.uSat,g.saturation); gl.uniform1f(uLoc.uTemp,g.temperature);
-      gl.uniform1f(uLoc.uTint,g.tint); gl.uniform1f(uLoc.uHi,g.highlights);
-      gl.uniform1f(uLoc.uSh,g.shadows); gl.uniform1f(uLoc.uVig,g.vignette);
-      gl.uniform1f(uLoc.uSplit,g.split||0);
-      gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
-      ctx2d.drawImage(glCanvas,0,0);
+    const ovSrc = loc.clip.overlay ? state.sources.find(x=>x.id===loc.clip.overlay.srcId) : null;
+    const R = splitRegions(ovSrc ? loc.clip.overlay.mode : 'none', cw, ch);
+    drawVideoRegion(v, loc.clip.grade, loc.clip.fit, loc.clip.effect, ...R.main);
+    if(ovSrc && R.over) drawVideoRegion(ovSrc.video, DEFAULT_GRADE, 'cover', null, ...R.over);
+    ctx2d.drawImage(glCanvas,0,0);
+    applyTransition2D();
+    if(ovSrc && R.over && loc.clip.overlay.mode==='pip'){
+      ctx2d.strokeStyle='rgba(255,255,255,.85)'; ctx2d.lineWidth = Math.max(3, cw*0.003);
+      ctx2d.strokeRect(R.over[0], R.over[1], R.over[2], R.over[3]);
     }
   }
+  drawCaptions();
   drawTexts();
 }
 function wrapText(c, text, maxW){
@@ -681,8 +864,21 @@ function drawTexts(){
 }
 
 // ---------- Playback engine ----------
-let activeSource = null;
+let activeSource = null, activeOverlaySrc = null;
 function pauseAllVideos(){ state.sources.forEach(s=>{ if(!s.video.paused) s.video.pause(); }); }
+function syncOverlay(loc){
+  const ovConf = loc.clip.overlay;
+  const ov = ovConf ? state.sources.find(x=>x.id===ovConf.srcId) : null;
+  if(activeOverlaySrc && activeOverlaySrc!==ov){ activeOverlaySrc.video.pause(); activeOverlaySrc = null; }
+  if(!ov || ov===activeSource) return;
+  activeOverlaySrc = ov;
+  ov.video.muted = true; // overlay is visual b-roll; main clip carries the audio
+  ov.video.loop = true;
+  const elapsed = (state.playhead - loc.start) % Math.max(0.5, ov.duration);
+  if(Math.abs(ov.video.currentTime - elapsed) > 0.4) ov.video.currentTime = elapsed;
+  if(state.playing && ov.video.paused) ov.video.play().catch(()=>{});
+  if(!state.playing && !ov.video.paused) ov.video.pause();
+}
 function activateClip(loc, seek=true){
   const s = src(loc.clip);
   if(activeSource && activeSource!==s) activeSource.video.pause();
@@ -690,8 +886,11 @@ function activateClip(loc, seek=true){
   connectSourceAudio(s);
   if(s.gain) s.gain.gain.value = loc.clip.volume;
   const v = s.video;
+  v.playbackRate = loc.clip.speed || 1;
+  v.muted = false; v.loop = false;
   if(seek || Math.abs(v.currentTime - loc.local) > 0.25) v.currentTime = loc.local;
   if(state.playing && v.paused) v.play().catch(()=>{});
+  syncOverlay(loc);
 }
 function setPlayhead(t, hard=true){
   state.playhead = Math.max(0, Math.min(totalDur(), t));
@@ -707,13 +906,77 @@ function play(){
   const loc = locate(state.playhead);
   activateClip(loc, true);
   src(loc.clip).video.play().catch(()=>{});
+  musicPlay();
   $('playIcon').innerHTML = '<path d="M7 5h4v14H7zM13 5h4v14h-4z"/>';
 }
 function stopPlayback(){
   state.playing = false;
   pauseAllVideos();
+  musicPause();
   $('playIcon').innerHTML = '<path d="M8 5v14l11-7z"/>';
 }
+
+// ---------- Background music ----------
+function connectMusicAudio(){
+  const m = state.music;
+  if(!m || m.node || !audioCtx) return;
+  m.node = audioCtx.createMediaElementSource(m.el);
+  m.gain = audioCtx.createGain();
+  m.gain.gain.value = m.volume;
+  m.node.connect(m.gain); m.gain.connect(masterGain);
+}
+function musicPlay(){
+  const m = state.music; if(!m) return;
+  connectMusicAudio();
+  const d = m.el.duration;
+  if(isFinite(d) && d > 0.5) m.el.currentTime = state.playhead % d;
+  m.el.play().catch(()=>{});
+}
+function musicPause(){ if(state.music) state.music.el.pause(); }
+function tickMusic(){
+  const m = state.music;
+  if(!m || !m.gain || !audioCtx) return;
+  let target = m.volume;
+  if(m.duck && state.clips.length){
+    const loc = locate(state.playhead);
+    const s = src(loc.clip);
+    if(s.rms){
+      const db = s.rms.db[Math.floor(loc.local / s.rms.hopSec)] ?? -80;
+      if(db > -42) target = m.volume * 0.22; // speech detected — duck the music
+    }
+  }
+  m.gain.gain.setTargetAtTime(target, audioCtx.currentTime, 0.15);
+}
+async function loadMusicFile(file){
+  removeMusic();
+  const el = new Audio(URL.createObjectURL(file));
+  el.loop = true; el.crossOrigin = 'anonymous';
+  try{
+    await new Promise((res,rej)=>{ el.onloadedmetadata=res; el.onerror=()=>rej(new Error('decode')); setTimeout(()=>rej(new Error('timeout')),10000); });
+  }catch(e){ toast(`Couldn't open ${file.name}`,'err'); return; }
+  state.music = { name:file.name.replace(/\.[^.]+$/,''), el, volume:0.35, duck:true, gain:null, node:null };
+  ensureAudio(); connectMusicAudio();
+  $('musicCard').style.display = 'block';
+  $('musicName').textContent = '🎵 ' + state.music.name;
+  $('musicVol').value = 0.35; $('musicVolVal').textContent = '35%';
+  $('duckToggle').classList.add('on');
+  // pre-analyze loudness of used sources so ducking can react to speech
+  state.sources.forEach(s=>{ if(!s.rms && s.file) getSourceLoudness(s, ()=>{}).catch(()=>{}); });
+  toast('Music added — it will loop under your video','ok');
+  if(state.playing) musicPlay();
+}
+function removeMusic(){
+  const m = state.music; if(!m) return;
+  m.el.pause();
+  try{ m.node?.disconnect(); m.gain?.disconnect(); }catch(e){}
+  state.music = null;
+  $('musicCard').style.display = 'none';
+}
+$('musicBtn').onclick = ()=>$('musicInput').click();
+$('musicInput').onchange = e=>{ if(e.target.files[0]) loadMusicFile(e.target.files[0]); e.target.value=''; };
+$('musicVol').oninput = e=>{ const m=state.music; if(!m) return; m.volume=+e.target.value; $('musicVolVal').textContent=Math.round(m.volume*100)+'%'; if(m.gain && !state.playing) m.gain.gain.value=m.volume; };
+$('duckToggle').onclick = ()=>{ const m=state.music; if(!m) return; m.duck=!m.duck; $('duckToggle').classList.toggle('on', m.duck); };
+$('musicRemove').onclick = ()=>{ removeMusic(); toast('Music removed'); };
 function togglePlay(){ state.playing ? stopPlayback() : play(); }
 
 function tick(){
@@ -727,12 +990,15 @@ function tick(){
         state.playhead = totalDur();
         if(state.exporting) finishExport(); else stopPlayback();
       } else {
+        startTransition(starts[loc.i+1]);
         state.playhead = starts[loc.i+1] + 0.001;
         activateClip(locate(state.playhead), true);
       }
     } else {
-      state.playhead = starts[loc.i] + Math.max(0, v.currentTime - loc.clip.in);
+      state.playhead = starts[loc.i] + Math.max(0, v.currentTime - loc.clip.in)/(loc.clip.speed||1);
+      syncOverlay(loc);
     }
+    tickMusic();
     updateTransport();
     if(state.exporting) updateExportProgress();
   }
@@ -785,7 +1051,7 @@ async function importFiles(files){
     }catch(e){}
     if(state.clips.length===0 || true){ /* auto-add to timeline */ }
     pushUndo();
-    state.clips.push({ id:nid(), srcId:source.id, in:0, out:video.duration, volume:1, fit:'cover', grade:{...DEFAULT_GRADE} });
+    state.clips.push(newClip(source.id, 0, video.duration));
     toast(`Added ${source.name} to timeline`,'ok');
   }
   refreshAll();
@@ -820,7 +1086,7 @@ function renderMedia(){
     card.querySelector('[data-act=broll]').onclick = ()=>{ s.broll=!s.broll; renderMedia(); };
     card.querySelector('[data-act=append]').onclick = ()=>{
       pushUndo();
-      state.clips.push({id:nid(), srcId:s.id, in:0, out:s.duration, volume:1, fit:'cover', grade:{...DEFAULT_GRADE}});
+      state.clips.push(newClip(s.id, 0, s.duration));
       refreshAll(); toast('Added to end of timeline','ok');
     };
     card.querySelector('[data-act=insert]').onclick = ()=>insertAtPlayhead(s);
@@ -835,11 +1101,11 @@ $('binFilter').addEventListener('click', e=>{
 });
 function insertAtPlayhead(source){
   pushUndo();
-  const nc = {id:nid(), srcId:source.id, in:0, out:source.duration, volume:1, fit:'cover', grade:{...DEFAULT_GRADE}};
+  const nc = newClip(source.id, 0, source.duration);
   if(!state.clips.length){ state.clips.push(nc); refreshAll(); return; }
   const loc = locate(state.playhead);
   if(loc.local > loc.clip.in + 0.05 && loc.local < loc.clip.out - 0.05){
-    const right = {...loc.clip, id:nid(), in:loc.local, grade:{...loc.clip.grade}};
+    const right = {...loc.clip, id:nid(), in:loc.local, grade:{...loc.clip.grade}, effect:{...(loc.clip.effect||{type:'none',amount:0.6})}, overlay: loc.clip.overlay?{...loc.clip.overlay}:null};
     loc.clip.out = loc.local;
     state.clips.splice(loc.i+1, 0, nc, right);
   } else {
@@ -979,7 +1245,7 @@ function splitAtPlayhead(){
   const loc = locate(state.playhead);
   if(loc.local < loc.clip.in+0.05 || loc.local > loc.clip.out-0.05){ toast('Move the playhead inside a clip to split'); return; }
   pushUndo();
-  const right = {...loc.clip, id:nid(), in:loc.local, grade:{...loc.clip.grade}};
+  const right = {...loc.clip, id:nid(), in:loc.local, grade:{...loc.clip.grade}, effect:{...(loc.clip.effect||{type:'none',amount:0.6})}, overlay: loc.clip.overlay?{...loc.clip.overlay}:null};
   loc.clip.out = loc.local;
   state.clips.splice(loc.i+1,0,right);
   state.selectedClip = right.id;
@@ -1087,6 +1353,7 @@ function syncGradeUI(){
     el.disabled = !c;
   });
   markPreset();
+  if(typeof syncEffectUI === 'function' && $('effectGrid').children.length) syncEffectUI();
 }
 $('copyGradeAll').onclick = ()=>{
   const c = selClip(); if(!c){ toast('Select a graded clip first'); return; }
@@ -1099,6 +1366,239 @@ $('resetGrade').onclick = ()=>{
   pushUndo(); c.grade = {...DEFAULT_GRADE};
   syncGradeUI(); renderTimeline();
 };
+
+// ---------- Effects UI ----------
+const FX_ICONS = {none:'∅', grain:'🎞️', vhs:'📼', glitch:'⚡', glow:'✨', pixelate:'🟪', fisheye:'🔮'};
+function buildEffectsUI(){
+  const grid = $('effectGrid');
+  EFFECTS.forEach(fx=>{
+    const b = document.createElement('button'); b.className='preset'; b.dataset.fx=fx.key;
+    b.innerHTML = `<div class="swatch" style="background:linear-gradient(135deg,#252c3d,#161a23);display:grid;place-items:center;font-size:15px">${FX_ICONS[fx.key]}</div><div class="pname">${fx.name}</div>`;
+    b.onclick = ()=>{
+      const targets = selClip() ? [selClip()] : state.clips;
+      if(!targets.length){ toast('Import a clip first'); return; }
+      pushUndo();
+      targets.forEach(c=>{ c.effect = { type:fx.key, amount:+$('fxAmount').value }; });
+      syncEffectUI();
+      toast(fx.key==='none' ? 'Effect removed' : `Effect "${fx.name}" applied`, 'ok');
+    };
+    grid.appendChild(b);
+  });
+  $('fxAmount').oninput = e=>{
+    $('fxAmtVal').textContent = (+e.target.value).toFixed(2);
+    const targets = selClip() ? [selClip()] : state.clips;
+    targets.forEach(c=>{ if(c.effect && c.effect.type!=='none') c.effect.amount = +e.target.value; });
+  };
+}
+function syncEffectUI(){
+  const c = selClip() || state.clips[0];
+  const fx = c?.effect?.type || 'none';
+  document.querySelectorAll('#effectGrid .preset').forEach(el=>el.classList.toggle('active', el.dataset.fx===fx));
+  $('fxAmountField').style.display = fx!=='none' ? 'block' : 'none';
+  if(c?.effect){ $('fxAmount').value = c.effect.amount; $('fxAmtVal').textContent = c.effect.amount.toFixed(2); }
+}
+
+// ---------- Transitions UI ----------
+$('transSelect').onchange = e=>{
+  state.transition.type = e.target.value;
+  toast(e.target.value==='none' ? 'Transitions off (hard cuts)' : `"${e.target.selectedOptions[0].textContent}" between every cut`, 'ok');
+};
+$('transDur').onchange = e=>{ state.transition.dur = +e.target.value; };
+
+// ---------- Speed & split screen (Clip tab) ----------
+$('speedSelect').onchange = e=>{
+  const c = selClip(); if(!c) return;
+  pushUndo();
+  c.speed = +e.target.value;
+  if(activeSource === src(c)) src(c).video.playbackRate = c.speed;
+  refreshAll();
+  toast(`Clip speed ${c.speed}×`, 'ok');
+};
+$('splitMode').onchange = e=>{
+  const c = selClip(); if(!c) return;
+  const mode = e.target.value;
+  if(!mode){ pushUndo(); c.overlay = null; syncClipUI(); toast('Split screen off'); return; }
+  const options = state.sources.filter(s=>s.id!==c.srcId);
+  if(!options.length){ toast('Import or record a second video first','err'); e.target.value = c.overlay?.mode || ''; return; }
+  pushUndo();
+  const keepSrc = c.overlay?.srcId && options.some(o=>o.id===c.overlay.srcId) ? c.overlay.srcId : options[0].id;
+  c.overlay = { srcId: keepSrc, mode };
+  syncClipUI();
+  toast('Split screen on — pick the second video below', 'ok');
+};
+$('splitSrc').onchange = e=>{ const c = selClip(); if(c?.overlay){ c.overlay.srcId = +e.target.value; syncOverlay(locate(state.playhead) || {clip:c, start:0}); } };
+
+// ---------- Auto captions (local Whisper) ----------
+let whisperPipe = null, whisperLoading = null;
+async function getWhisper(status){
+  if(whisperPipe) return whisperPipe;
+  if(!whisperLoading){
+    whisperLoading = (async()=>{
+      status('Loading caption AI (~40 MB, one-time download)…');
+      const { pipeline, env } = await import('https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2/+esm');
+      env.allowLocalModels = false;
+      whisperPipe = await pipeline('automatic-speech-recognition', 'Xenova/whisper-tiny.en', {
+        progress_callback: p=>{ if(p.status==='progress' && p.file && p.file.endsWith('.onnx')) status(`Downloading caption model… ${Math.round(p.progress||0)}%`); },
+      });
+      return whisperPipe;
+    })().catch(e=>{ whisperLoading = null; throw e; });
+  }
+  return whisperLoading;
+}
+async function decodePCM16k(source){
+  const ab = await source.file.arrayBuffer();
+  const off = new OfflineAudioContext(1, 1, 16000);
+  const buf = await off.decodeAudioData(ab);
+  return buf.getChannelData(0);
+}
+async function transcribeSource(source, status){
+  if(source.words) return source.words;
+  const pipe = await getWhisper(status);
+  status(`Listening to "${source.name}"…`);
+  const pcm = await decodePCM16k(source);
+  const out = await pipe(pcm, { return_timestamps:'word', chunk_length_s:30, stride_length_s:5 });
+  source.words = (out.chunks||[])
+    .filter(c=>c.timestamp && c.timestamp[0]!=null)
+    .map(c=>({ w:c.text.trim(), t0:c.timestamp[0], t1:c.timestamp[1] ?? (c.timestamp[0]+0.3) }))
+    .filter(x=>x.w);
+  return source.words;
+}
+function buildCaptionItems(){
+  const items = [];
+  const starts = clipStarts();
+  state.clips.forEach((c,i)=>{
+    const s = src(c); if(!s || !s.words) return;
+    const speed = c.speed||1;
+    let line = null;
+    for(const w of s.words){
+      if(w.t1 <= c.in+0.02 || w.t0 >= c.out-0.02) continue;
+      const t0 = starts[i] + (Math.max(w.t0,c.in)-c.in)/speed;
+      const t1 = starts[i] + (Math.min(w.t1,c.out)-c.in)/speed;
+      if(!line || t0-line.end > 0.8 || line.words.length >= 4 || t1-line.start > 3.4){
+        line = { start:t0, end:t1, words:[] };
+        items.push(line);
+      }
+      line.words.push({ w:w.w, t0, t1 });
+      line.end = t1;
+    }
+  });
+  state.captions.items = items;
+}
+async function generateCaptions(){
+  if(!state.clips.length){ toast('Import a clip first'); return 'Error: timeline is empty.'; }
+  const status = m=>{ $('capStatus').textContent = m; };
+  try{
+    const used = [...new Set(state.clips.map(c=>c.srcId))].map(id=>state.sources.find(s=>s.id===id)).filter(s=>s&&s.file);
+    for(const s of used) await transcribeSource(s, status);
+    buildCaptionItems();
+    state.captions.on = true;
+    $('capControls').style.display = 'block';
+    const n = state.captions.items.length;
+    status(n ? `${n} caption lines generated — they stay in sync as you edit cuts.` : 'No speech detected in the audio.');
+    toast(n ? `💬 ${n} caption lines added` : 'No speech detected', n?'ok':'');
+    return n ? `Generated ${n} caption lines (word-timed, burned in on export).` : 'Transcription ran but found no speech.';
+  }catch(e){
+    console.error(e);
+    status('Could not load the caption model — check your connection and try again.');
+    toast('Caption model failed to load','err');
+    return 'Error loading caption model: ' + (e.message||e);
+  }
+}
+const FILLERS = new Set(['um','umm','ummm','uh','uhh','uhhh','er','err','ah','ahh','hmm','mmm','mhm','uhm','erm']);
+async function removeFillerWords(){
+  if(!state.clips.length){ toast('Import a clip first'); return 'Error: timeline is empty.'; }
+  const status = m=>{ $('capStatus').textContent = m; };
+  try{
+    const used = [...new Set(state.clips.map(c=>c.srcId))].map(id=>state.sources.find(s=>s.id===id)).filter(s=>s&&s.file);
+    for(const s of used) await transcribeSource(s, status);
+  }catch(e){ toast('Caption model failed to load','err'); return 'Error loading model: '+(e.message||e); }
+  stopPlayback();
+  pushUndo();
+  let cuts = 0, saved = 0;
+  for(let idx = state.clips.length-1; idx >= 0; idx--){
+    const clip = state.clips[idx];
+    const s = src(clip); if(!s.words) continue;
+    const fillers = s.words.filter(w=>FILLERS.has(w.w.toLowerCase().replace(/[^a-z]/g,'')) && w.t0 > clip.in+0.05 && w.t1 < clip.out-0.05);
+    if(!fillers.length) continue;
+    const keeps = []; let cur = clip.in;
+    for(const f of fillers){
+      const a = Math.max(clip.in, f.t0-0.04), b = Math.min(clip.out, f.t1+0.04);
+      if(a-cur > 0.08) keeps.push([cur,a]);
+      cur = Math.max(cur,b); cuts++; saved += b-a;
+    }
+    if(clip.out-cur > 0.08) keeps.push([cur, clip.out]);
+    const tmpl = { volume:clip.volume, fit:clip.fit, speed:clip.speed||1, grade:{...clip.grade}, effect:{...(clip.effect||{type:'none',amount:0.6})}, overlay: clip.overlay?{...clip.overlay}:null };
+    state.clips.splice(idx, 1, ...keeps.map(([a,b])=>newClip(clip.srcId, a, b, {...tmpl, grade:{...clip.grade}})));
+  }
+  if(cuts){
+    state.selectedClip = null;
+    refreshAll();
+    status(`Cut ${cuts} filler words (${saved.toFixed(1)}s). Undo with Ctrl+Z if needed.`);
+    toast(`✂ Cut ${cuts} filler words (${saved.toFixed(1)}s)`,'ok');
+    return `Cut ${cuts} filler words, saving ${saved.toFixed(1)}s.`;
+  }
+  undoStack.pop();
+  status('No filler words (um, uh, er…) found.');
+  toast('No filler words found');
+  return 'No filler words found in the speech.';
+}
+function drawCaptions(){
+  const cap = state.captions;
+  if(!cap.on || !cap.items.length) return;
+  const t = state.playhead;
+  const item = cap.items.find(it=>t >= it.start && t <= it.end + 0.25);
+  if(!item) return;
+  const [cw,ch] = ASPECTS[state.aspect];
+  let size = cap.size * (cw/1080);
+  ctx2d.font = `800 ${size}px Inter, sans-serif`;
+  const gap = size*0.3;
+  let widths = item.words.map(w=>ctx2d.measureText(w.w).width);
+  let totalW = widths.reduce((a,b)=>a+b,0) + gap*(item.words.length-1);
+  if(totalW > cw*0.92){
+    size *= cw*0.92/totalW;
+    ctx2d.font = `800 ${size}px Inter, sans-serif`;
+    widths = item.words.map(w=>ctx2d.measureText(w.w).width);
+    totalW = widths.reduce((a,b)=>a+b,0) + size*0.3*(item.words.length-1);
+  }
+  const y = cap.y*ch;
+  let x = (cw-totalW)/2;
+  ctx2d.textAlign = 'left'; ctx2d.textBaseline = 'middle';
+  if(cap.style === 'classic'){
+    ctx2d.fillStyle = 'rgba(0,0,0,0.72)';
+    const px = size*0.45, py = size*0.3;
+    ctx2d.beginPath();
+    ctx2d.roundRect(x-px, y-size/2-py, totalW+px*2, size+py*2, size*0.3);
+    ctx2d.fill();
+  }
+  item.words.forEach((w,i)=>{
+    const active = t >= w.t0 && t < w.t1;
+    const past = t >= w.t1;
+    let color = cap.color, scale = 1;
+    if(cap.style === 'karaoke') color = (active || past) ? cap.accent : cap.color;
+    else if(cap.style === 'pop'){ color = active ? cap.accent : cap.color; scale = active ? 1.14 : 1; }
+    if(cap.style !== 'classic'){
+      ctx2d.shadowColor = 'rgba(0,0,0,0.9)'; ctx2d.shadowBlur = size*0.22; ctx2d.shadowOffsetY = size*0.05;
+    }
+    ctx2d.fillStyle = color;
+    if(scale !== 1){
+      ctx2d.save();
+      ctx2d.translate(x + widths[i]/2, y);
+      ctx2d.scale(scale, scale);
+      ctx2d.fillText(w.w, -widths[i]/2, 0);
+      ctx2d.restore();
+    } else {
+      ctx2d.fillText(w.w, x, y);
+    }
+    ctx2d.shadowColor = 'transparent'; ctx2d.shadowBlur = 0; ctx2d.shadowOffsetY = 0;
+    x += widths[i] + size*0.3;
+  });
+}
+$('genCapsBtn').onclick = generateCaptions;
+$('fillerBtn').onclick = removeFillerWords;
+$('capStyle').onchange = e=>{ state.captions.style = e.target.value; };
+$('capSize').oninput = e=>{ state.captions.size = +e.target.value; $('capSizeVal').textContent = e.target.value; };
+$('capAccent').onchange = e=>{ state.captions.accent = e.target.value; };
+$('clearCapsBtn').onclick = ()=>{ state.captions.on = false; state.captions.items = []; $('capControls').style.display = 'none'; $('capStatus').textContent = ''; toast('Captions cleared'); };
 
 // ---------- Cleanup: auto pause removal ----------
 const decodeCache = new Map();
@@ -1162,7 +1662,7 @@ async function cleanClips(targets){
       const rms = await getSourceLoudness(source, m=>{ status.textContent = `${source.name}: ${m}`; });
       const keeps = findKeepSegments(rms, clip.in, clip.out, opts);
       if(!keeps.length || (keeps.length===1 && keeps[0][1]-keeps[0][0] > clipDur(clip)-0.15)) continue;
-      const newClips = keeps.map(([a,b])=>({ id:nid(), srcId:clip.srcId, in:a, out:b, volume:clip.volume, fit:clip.fit, grade:{...clip.grade} }));
+      const newClips = keeps.map(([a,b])=>newClip(clip.srcId, a, b, { volume:clip.volume, fit:clip.fit, speed:clip.speed||1, grade:{...clip.grade}, effect:{...(clip.effect||{type:'none',amount:0.6})}, overlay: clip.overlay?{...clip.overlay}:null }));
       state.clips.splice(idx, 1, ...newClips);
       removedCount += Math.max(0, keeps.length-1) + 1;
     }
@@ -1255,6 +1755,13 @@ function syncClipUI(){
     $('clipFit').value = c.fit;
     $('volSlider').value = c.volume;
     $('volVal').textContent = Math.round(c.volume*100)+'%';
+    $('speedSelect').value = String(c.speed||1);
+    $('splitMode').value = c.overlay?.mode || '';
+    $('splitSrcField').style.display = c.overlay ? 'block' : 'none';
+    if(c.overlay){
+      const opts = state.sources.filter(s=>s.id!==c.srcId);
+      $('splitSrc').innerHTML = opts.map(o=>`<option value="${o.id}" ${o.id===c.overlay.srcId?'selected':''}>${o.name}</option>`).join('');
+    }
   }
 }
 $('clipFit').onchange = e=>{ const c=selClip(); if(c) c.fit=e.target.value; };
@@ -1456,7 +1963,7 @@ function addChat(role, text){
   chatEls.log.scrollTop = chatEls.log.scrollHeight;
   return el;
 }
-addChat('ai', "Hi! I'm your editing copilot. Import or record a clip, then tell me things like:\n• \"remove the pauses\"\n• \"make it cinematic and turn it into a Short\"\n• \"add a hook that says WAIT FOR IT\"\n• \"export it\"");
+addChat('ai', "Hi! I'm your editing copilot. Import or record a clip, then tell me things like:\n• \"remove the pauses and umms\"\n• \"generate captions\"\n• \"make it cinematic with crossfades\"\n• \"turn it into a Short\"\n• \"split screen with my facecam\"\n• \"export it\"");
 
 const LOOK_WORDS = PRESETS.map(p=>({p, words:[p.key, ...p.name.toLowerCase().split(/\s|&/)].filter(w=>w.length>2)}));
 
@@ -1476,6 +1983,12 @@ const AGENT_TOOLS = [
   { name:'set_volume', description:'Set clip volume. index -1 applies to all clips. 1 = 100%, 0 = mute.', input_schema:{type:'object', properties:{ index:{type:'integer'}, volume:{type:'number'} }, required:['index','volume'], additionalProperties:false} },
   { name:'undo_last', description:'Undo the last editing operation.', input_schema:{type:'object', properties:{}, additionalProperties:false} },
   { name:'start_export', description:'Start exporting the finished video (renders in real time, then downloads).', input_schema:{type:'object', properties:{}, additionalProperties:false} },
+  { name:'set_transition', description:'Set the transition used between every cut. Types: none (hard cut), crossfade, fade (to black), slide, zoom (punch).', input_schema:{type:'object', properties:{ type:{type:'string', enum:['none','crossfade','fade','slide','zoom']}, duration_sec:{type:'number', description:'0.3, 0.5 or 0.8'} }, required:['type'], additionalProperties:false} },
+  { name:'set_effect', description:'Apply a visual effect. Effects: none, grain (film grain), vhs (retro tape), glitch, glow (dreamy), pixelate, fisheye.', input_schema:{type:'object', properties:{ effect:{type:'string', enum:['none','grain','vhs','glitch','glow','pixelate','fisheye']}, intensity:{type:'number', description:'0.1 to 1, default 0.6'}, scope:{type:'string', enum:['all','selected']} }, required:['effect'], additionalProperties:false} },
+  { name:'set_speed', description:'Set playback speed of a clip. index -1 applies to all clips. Speeds: 0.5, 0.75, 1, 1.25, 1.5, 2.', input_schema:{type:'object', properties:{ index:{type:'integer'}, speed:{type:'number'} }, required:['index','speed'], additionalProperties:false} },
+  { name:'set_split_screen', description:'Show two videos at once on a clip. Modes: top/bottom (vertical stack — great for 9:16), left/right (side by side), pip (corner picture-in-picture), none (off). second_video is a media-bin name from get_project_state.', input_schema:{type:'object', properties:{ index:{type:'integer'}, mode:{type:'string', enum:['top','bottom','left','right','pip','none']}, second_video:{type:'string'} }, required:['index','mode'], additionalProperties:false} },
+  { name:'generate_captions', description:'Transcribe the speech locally (private, in-browser Whisper AI) and burn word-timed styled captions into the video. Slow the first time (model download).', input_schema:{type:'object', properties:{ style:{type:'string', enum:['karaoke','pop','classic']} }, additionalProperties:false} },
+  { name:'remove_filler_words', description:'Transcribe the speech and automatically cut filler words (um, uh, er…) out of the timeline.', input_schema:{type:'object', properties:{}, additionalProperties:false} },
 ];
 
 function projectStateJSON(){
@@ -1495,7 +2008,7 @@ function findLook(q){
   return PRESETS.find(p=>p.key===q) || LOOK_WORDS.find(l=>l.words.some(w=>q.includes(w)))?.p || null;
 }
 async function agentExecuteTool(name, input){
-  const needClips = ['remove_pauses','apply_look','adjust_grade','apply_style','split_at','delete_clip','trim_clip','reorder_clip','set_volume','start_export'];
+  const needClips = ['remove_pauses','apply_look','adjust_grade','apply_style','split_at','delete_clip','trim_clip','reorder_clip','set_volume','start_export','set_effect','set_speed','set_split_screen'];
   if(needClips.includes(name) && !state.clips.length) return 'Error: the timeline is empty. Ask the user to import or record a video first.';
   switch(name){
     case 'get_project_state': return projectStateJSON();
@@ -1589,6 +2102,49 @@ async function agentExecuteTool(name, input){
     }
     case 'undo_last': undo(); return 'Undone.';
     case 'start_export': $('exportBtn').click(); return 'Export started — it renders in real time and downloads when finished.';
+    case 'set_transition': {
+      state.transition.type = input.type;
+      if(input.duration_sec) state.transition.dur = Math.max(0.2, Math.min(1.2, input.duration_sec));
+      $('transSelect').value = input.type;
+      return input.type==='none' ? 'Transitions off — hard cuts.' : `"${input.type}" transition (${state.transition.dur}s) applied between every cut.`;
+    }
+    case 'set_effect': {
+      const key = input.effect;
+      if(!(key in EFFECT_IDS)) return `Unknown effect. Available: ${EFFECTS.map(e=>e.key).join(', ')}`;
+      const targets = input.scope==='selected' && selClip() ? [selClip()] : state.clips;
+      pushUndo();
+      targets.forEach(c=>{ c.effect = { type:key, amount: Math.max(0.1, Math.min(1, input.intensity ?? 0.6)) }; });
+      syncEffectUI();
+      return key==='none' ? 'Effects removed.' : `Effect "${key}" applied to ${targets.length} clip(s).`;
+    }
+    case 'set_speed': {
+      const sp = Math.max(0.25, Math.min(4, input.speed));
+      const targets = input.index === -1 ? state.clips : [state.clips[input.index]].filter(Boolean);
+      if(!targets.length) return `No clip at index ${input.index}.`;
+      pushUndo();
+      targets.forEach(c=>{ c.speed = sp; if(activeSource===src(c)) src(c).video.playbackRate = sp; });
+      refreshAll();
+      return `Speed ${sp}× on ${targets.length} clip(s). Timeline is now ${totalDur().toFixed(1)}s.`;
+    }
+    case 'set_split_screen': {
+      const c = state.clips[input.index];
+      if(!c) return `No clip at index ${input.index}.`;
+      if(input.mode==='none'){ pushUndo(); c.overlay = null; refreshAll(); return 'Split screen removed.'; }
+      const options = state.sources.filter(s=>s.id!==c.srcId);
+      if(!options.length) return 'Error: only one video is loaded. Ask the user to import or record a second video first.';
+      let ov = input.second_video ? options.find(s=>s.name.toLowerCase().includes(String(input.second_video).toLowerCase())) : options[0];
+      if(!ov) return `No media named "${input.second_video}". Available: ${options.map(o=>o.name).join(', ')}`;
+      pushUndo();
+      c.overlay = { srcId: ov.id, mode: input.mode };
+      refreshAll();
+      return `Split screen "${input.mode}" on clip ${input.index} with "${ov.name}" (its audio is muted).`;
+    }
+    case 'generate_captions': {
+      if(input.style && ['karaoke','pop','classic'].includes(input.style)){ state.captions.style = input.style; $('capStyle').value = input.style; }
+      switchTab('text');
+      return await generateCaptions();
+    }
+    case 'remove_filler_words': return await removeFillerWords();
     default: return `Unknown tool ${name}.`;
   }
 }
@@ -1597,8 +2153,10 @@ const AGENT_SYSTEM = `You are the AI copilot inside DivineCut, a browser video e
 
 Guidelines:
 - Call get_project_state first when you need to know what's on the timeline.
-- "Umms", "dead air", "silences", "cleanup" → remove_pauses.
+- "Dead air", "silences", "long pauses" → remove_pauses. "Umms/filler words" → remove_filler_words. "Captions/subtitles" → generate_captions.
 - "Make it a Short/Reel/TikTok" → apply_style "Viral Short" (or set_aspect 9:16 if they only want the aspect changed).
+- "Facecam over gameplay", "react video", "stack two videos" → set_split_screen (top/bottom for vertical, left/right for wide, pip for corner cam).
+- Transitions, effects (grain/vhs/glitch/glow), speed, music volume are all available as tools.
 - Chain multiple tools to fulfill compound requests in one go.
 - After editing, summarize what changed in plain language. Never invent state — read it with get_project_state.`;
 
@@ -1664,7 +2222,20 @@ async function runLocalAgent(msg){
     else if(/(1:1|square)/.test(q)) await run('set_aspect', {aspect:'1:1'});
     else if(/4:5/.test(q)) await run('set_aspect', {aspect:'4:5'});
   }
-  if(/(pause|silence|umm|uhh|dead air|clean)/.test(q)) await run('remove_pauses', {scope:'all'});
+  const quotedEarly = msg.match(/["“”']([^"“”']{2,80})["“”']/);
+  if(/(pause|silence|dead air|clean)/.test(q)) await run('remove_pauses', {scope:'all'});
+  if(/(umm|uhh|filler)/.test(q)) await run('remove_filler_words', {});
+  if(/caption|subtitle|transcribe/.test(q) && !quotedEarly) await run('generate_captions', {});
+  const trans = /crossfade/.test(q) ? 'crossfade' : /fade/.test(q) ? 'fade' : /slide/.test(q) ? 'slide' : /zoom (punch|transition)/.test(q) ? 'zoom' : /transition/.test(q) ? 'crossfade' : null;
+  if(trans) await run('set_transition', {type:trans});
+  const fx = EFFECTS.find(f=>f.key!=='none' && (q.includes(f.key) || q.includes(f.name.toLowerCase())));
+  if(fx) await run('set_effect', {effect:fx.key});
+  if(/slow(er| motion| it)?( down)?/.test(q)) await run('set_speed', {index:-1, speed:0.5});
+  else if(/speed (it )?up|faster|2x/.test(q)) await run('set_speed', {index:-1, speed:1.5});
+  if(/split.?screen|side by side|stack/.test(q)){
+    const loc0 = state.clips.length ? locate(state.playhead) : null;
+    await run('set_split_screen', {index: loc0 ? loc0.i : 0, mode: /side by side/.test(q) ? 'left' : /pip|corner/.test(q) ? 'pip' : 'top'});
+  }
   if(!style){
     const look = findLook(q);
     if(look && look.key!=='none') await run('apply_look', {look:look.key, scope: selClip() ? 'selected':'all'});
@@ -1719,10 +2290,14 @@ if(localStorage.getItem('dc_api_key')) $('apiKeyInput').value = localStorage.get
 
 // ---------- Refresh helpers ----------
 function refreshSelection(){ renderTimeline(); syncGradeUI(); syncClipUI(); }
-function refreshAll(){ renderMedia(); renderTimeline(); syncGradeUI(); syncClipUI(); syncTextUI(); updateTransport(); }
+function refreshAll(){
+  if(state.captions.on) buildCaptionItems(); // keep captions in sync with edited cuts
+  renderMedia(); renderTimeline(); syncGradeUI(); syncClipUI(); syncTextUI(); updateTransport();
+}
 
 // ---------- Boot ----------
 buildColorUI();
+buildEffectsUI();
 renderStyles();
 setCanvasSize();
 refreshAll();
