@@ -1,0 +1,22 @@
+{
+  "podcast-reel-pack": {
+    "label": "🎙 Podcast Reel Pack",
+    "instruction": "Run the standard reel pipeline from TOOLKIT.md on the newest video in assets/: proxy, whisper, enhance audio, virality-rank the moments, produce the 5 best 9:16 reels (30-60s) with house grade, bold captions burned + .srt files, fades, thumbnails for each, and out/TITLES.md with titles/descriptions/hashtags per clip."
+  },
+  "tighten": {
+    "label": "✂️ Tighten (full video)",
+    "instruction": "Tighten the newest video in assets/ using the cut-video skill (aggressive): remove silences, fillers, retakes; preserve laughs and comedic pauses. Enhance audio with toolkit/enhance_audio.py. Deliver out/tightened.mp4 (same aspect as source) plus out/tightened.srt."
+  },
+  "clean-captions": {
+    "label": "💬 Enhance + Captions",
+    "instruction": "On the newest video in assets/: enhance audio (toolkit/enhance_audio.py normal), whisper transcript, burn bold-style captions with toolkit/captions.py, export .srt and .vtt, apply house grade, deliver out/captioned.mp4 keeping original aspect."
+  },
+  "best-60": {
+    "label": "⭐ Best 60 seconds",
+    "instruction": "Find THE single best 60 seconds of the newest video in assets/ (virality_rank + your judgment on the transcript), produce it in 9:16 AND 1:1 AND 16:9 (multi_aspect --grade), bold captions + srt on each, thumbnails, and out/TITLES.md."
+  },
+  "shorts-3x": {
+    "label": "🎬 3 Shorts",
+    "instruction": "Produce the 3 strongest 30-45s shorts from the newest video in assets/ following the standard reel pipeline: 9:16, graded, bold captions + srt, fades, thumbnails, TITLES.md."
+  }
+}
